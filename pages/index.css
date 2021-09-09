@@ -1,0 +1,40 @@
+/*normalize.css*/
+@import url(../vendor/normalize.css);
+
+/*Шрифты*/
+@import url(../vendor/fonts/inter.css);
+
+/*Главный контейнер и миксы*/
+@import url(../blocks/page/page.css);
+@import url(../blocks/page/__section/page__section.css);
+
+/*Общие стили для ссылок*/
+
+
+
+/*Cтили блоков и элементов*/
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+@import url(../blocks/header/__line/header__line.css);
+
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+
+@import url(../blocks/profile/__info-name/profile__info-name.css);
+@import url(../blocks/profile/__info-job/profile__info-job.css);
+
+
+
+@import url(../blocks/photo-grid/photo-grid.css);
+
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__links/footer__links.css);
+@import url(../blocks/footer/__link/footer__link.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);
+
+
+* {
+    outline: 1px solid green;
+  }
+

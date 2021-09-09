@@ -1,0 +1,16 @@
+.header {
+  padding-top: 45px;
+  padding-right: 15.6%;
+  padding-left: 15.6%;
+  margin-bottom: 40px;
+  line-height: 0;
+}
+
+@media screen and (max-width: 544px) {
+  .header {
+    padding-top: 28px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-bottom: 42px;
+  }
+}
