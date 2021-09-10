@@ -20,10 +20,13 @@
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__info/profile__info.css);
-
-@import url(../blocks/profile/__info-name/profile__info-name.css);
-@import url(../blocks/profile/__info-job/profile__info-job.css);
-
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__name-text/profile__name-text.css);
+@import url(../blocks/edit-button/edit-button.css);
+@import url(../blocks/edit-button/__image/edit-button__image.css);
+@import url(../blocks/profile/__job/profile__job.css);
+@import url(../blocks/add-button/add-button.css);
+@import url(../blocks/add-button/__image/add-button__image.css);
 
 
 @import url(../blocks/photo-grid/photo-grid.css);

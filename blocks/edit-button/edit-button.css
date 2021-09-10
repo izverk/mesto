@@ -1,0 +1,7 @@
+.edit-button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+}
