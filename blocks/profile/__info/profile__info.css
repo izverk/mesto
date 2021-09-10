@@ -1,4 +1,5 @@
 .profile__info {
   display: flex;
   flex-direction: column;
+  margin-right: 27.7%;
 }

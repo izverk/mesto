@@ -10,18 +10,36 @@
   <body>
     <div class="page">
       <header class="header">
-        <img class="header__logo" src="./images/Logo.svg" alt="Логотип сайта" />
+        <img class="header__logo" src="./images/logo.svg" alt="Логотип сайта" />
         <hr class="header__line" />
       </header>
       <main>
         <section class="profile page__section">
-          <img class="profile__avatar" src="./images/Cousteau.jpg" alt="Фотография-аватар автора снимков">
+          <img
+            class="profile__avatar"
+            src="./images/cousteau.jpg"
+            alt="Фотография-аватар автора снимков"
+          />
           <div class="profile__info">
-            <h1 class="profile__info-name">Жак-Ив Кусто</h1>
-            <p class="profile__info-job">Исследователь океана</p>
+            <div class="profile__name">
+              <h1 class="profile__name-text">Жак-Ив Кусто</h1>
+              <div class="edit-button">
+                <img
+                  class="edit-button__image"
+                  src="./images/pencil.svg"
+                  alt="Иконка - карандаш"
+                />
+              </div>
+            </div>
+            <p class="profile__job">Исследователь океана</p>
           </div>
-
-
+          <div class="add-button">
+            <img
+              class="add-button__image"
+              src="./images/+.svg"
+              alt="Иконка - знак плюс"
+            />
+          </div>
         </section>
       </main>
       <footer class="footer">
