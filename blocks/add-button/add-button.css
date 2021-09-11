@@ -1,9 +1,18 @@
 .add-button {
-  width: 150px;
+  width: 17%;
   height: 50px;
+  margin-left: auto;
+
   border: 2px solid #ffffff;
   box-sizing: border-box;
   border-radius: 2px;
   align-self: center;
   display: flex;
 }
+
+@media screen and (max-width: 564px) {
+  .add-button {
+    width: 100%;
+  }
+}
+

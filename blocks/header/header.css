@@ -6,6 +6,20 @@
   line-height: 0;
 }
 
+@media screen and (max-width: 1120px) {
+  .header {
+    padding-left: 11%;
+    padding-right: 11%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .header {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+}
+
 @media screen and (max-width: 544px) {
   .header {
     padding-top: 28px;

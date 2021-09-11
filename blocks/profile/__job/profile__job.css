@@ -4,3 +4,10 @@
   font-size: 18px;
   line-height: 22px;
 }
+
+@media screen and (max-width: 564px) {
+  .profile__job {
+    margin-bottom: 36px;
+    text-align: center;
+  }
+}

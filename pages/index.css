@@ -28,12 +28,14 @@
 @import url(../blocks/add-button/add-button.css);
 @import url(../blocks/add-button/__image/add-button__image.css);
 
-
-@import url(../blocks/photo-grid/photo-grid.css);
+@import url(../blocks/gallery/gallery.css);
+@import url(../blocks/gallery/__list/gallery__list.css);
+@import url(../blocks/gallery/__card/gallery__card.css);
+@import url(../blocks/gallery/__card-photo/gallery__card-photo.css);
+@import url(../blocks/gallery/__card-name/gallery__card-name.css);
+@import url(../blocks/gallery/__card-like/gallery__card-like.css);
 
 @import url(../blocks/footer/footer.css);
-@import url(../blocks/footer/__links/footer__links.css);
-@import url(../blocks/footer/__link/footer__link.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
 

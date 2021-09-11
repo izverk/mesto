@@ -2,5 +2,12 @@
   margin-bottom: 16px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: baseline;
+}
+
+@media screen and (max-width: 564px) {
+  .profile__name {
+    margin-bottom: 14px;
+    justify-content: center;
+  }
 }
