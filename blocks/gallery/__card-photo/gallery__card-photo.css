@@ -3,4 +3,5 @@
   object-fit: cover;
   margin-bottom: 25px;
   order: 1;
+  border-radius: 10px 10px 0 0;
 }
