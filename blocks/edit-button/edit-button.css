@@ -5,6 +5,11 @@
   display: flex;
   border: 1px solid #fff;
   box-sizing: border-box;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 640px) {
