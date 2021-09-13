@@ -51,20 +51,7 @@
                 class="gallery__card-photo"
               />
               <img
-                src="./images/like.svg"
-                alt="Иконка - лайк"
-                class="gallery__card-like"
-              />
-            </li>
-            <li class="gallery__card">
-              <h2 class="gallery__card-name">Гора Эльбрус</h2>
-              <img
-                src="./images/kirill-pershin-1556355-unsplash.jpg"
-                alt="Фотография высокой горы"
-                class="gallery__card-photo"
-              />
-              <img
-                src="./images/like.svg"
+                src="./images/like_off.svg"
                 alt="Иконка - лайк"
                 class="gallery__card-like"
               />
@@ -72,12 +59,12 @@
             <li class="gallery__card">
               <h2 class="gallery__card-name">Домбай</h2>
               <img
-                src="./images/kirill-pershin-1404681-unsplash.jpg"
-                alt="Фотография. Широкое поле утром"
+                src="./images/kirill-pershin-1556355-unsplash.jpg"
+                alt="Фотография высокой горы"
                 class="gallery__card-photo"
               />
               <img
-                src="./images/like.svg"
+                src="./images/like_off.svg"
                 alt="Иконка - лайк"
                 class="gallery__card-like"
               />
@@ -85,12 +72,12 @@
             <li class="gallery__card">
               <h2 class="gallery__card-name">Гора Эльбрус</h2>
               <img
-                src="./images/kirill-pershin-1556355-unsplash.jpg"
-                alt="Фотография высокой горы"
+                src="./images/kirill-pershin-1404681-unsplash.jpg"
+                alt="Фотография далёкой горы на горизонте"
                 class="gallery__card-photo"
               />
               <img
-                src="./images/like.svg"
+                src="./images/like_off.svg"
                 alt="Иконка - лайк"
                 class="gallery__card-like"
               />
@@ -98,12 +85,25 @@
             <li class="gallery__card">
               <h2 class="gallery__card-name">Домбай</h2>
               <img
-                src="./images/kirill-pershin-1404681-unsplash.jpg"
-                alt="Фотография. Широкое поле утром"
+                src="./images/kirill-pershin-1556355-unsplash.jpg"
+                alt="Фотография высокой горы"
                 class="gallery__card-photo"
               />
               <img
-                src="./images/like.svg"
+                src="./images/like_off.svg"
+                alt="Иконка - лайк"
+                class="gallery__card-like"
+              />
+            </li>
+            <li class="gallery__card">
+              <h2 class="gallery__card-name">Гора Эльбрус</h2>
+              <img
+                src="./images/kirill-pershin-1404681-unsplash.jpg"
+                alt="Фотография далёкой горы на горизонте"
+                class="gallery__card-photo"
+              />
+              <img
+                src="./images/like_off.svg"
                 alt="Иконка - лайк"
                 class="gallery__card-like"
               />
@@ -116,7 +116,7 @@
                 class="gallery__card-photo"
               />
               <img
-                src="./images/like.svg"
+                src="./images/like_off.svg"
                 alt="Иконка - лайк"
                 class="gallery__card-like"
               />
@@ -129,24 +129,26 @@
       </footer>
     </div>
     <section class="popup">
-      <form class="popup__form">
+      <form class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <img
-        src="./images/close_icon.svg"
-        alt="Иконка - крестик"
-        class="popup__close"
+          src="./images/close_icon.svg"
+          alt="Иконка - крестик закрытия окна"
+          class="popup__close"
         />
         <input
           type="text"
+          name="username"
           class="popup__input popup__input_type_name"
           placeholder=""
         />
         <input
           type="text"
+          name="userjob"
           class="popup__input popup__input_type_job"
           placeholder=""
         />
-        <div class="popup__save-button">Сохранить</div>
+        <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
     </section>
     <script src="./scripts/index.js"></script>
