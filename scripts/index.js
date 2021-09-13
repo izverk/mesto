@@ -8,7 +8,7 @@ const popupCloseBtn = popup.querySelector(".popup__close");
 let nameInput = popup.querySelector(".popup__input_type_name");
 let jobInput = popup.querySelector(".popup__input_type_job");
 let form = popup.querySelector(".popup__container");
-let nameProfile = document.querySelector(".profile__name-text");
+let nameProfile = document.querySelector(".profile__name");
 let jobProfile = document.querySelector(".profile__job");
 
 // Функция открытия-закрытия popup

@@ -1,13 +1,25 @@
 .profile__name {
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: baseline;
+  margin: 0 18px 0 0;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 1.14;
 }
 
-@media screen and (max-width: 564px) {
+@media screen and (max-width: 840px) {
   .profile__name {
-    margin-bottom: 14px;
-    justify-content: center;
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile__name {
+    font-size: 27px;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .profile__name {
+    line-height: 1.22;
   }
 }
