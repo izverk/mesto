@@ -8,10 +8,6 @@
 @import url(../blocks/page/page.css);
 @import url(../blocks/page/__section/page__section.css);
 
-/*Общие стили для ссылок*/
-
-
-
 /*Cтили блоков и элементов*/
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
@@ -47,7 +43,6 @@
 @import url(../blocks/popup/__input/__input_type/popup__input_type_name.css);
 @import url(../blocks/popup/__input/__input_type/popup__input_type_job.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
-
 
 
 /*
