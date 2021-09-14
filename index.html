@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Mesto</title>
+    <link rel="icon" href="./images/favicon_mesto48px.ico" />
+    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body>
     <div class="page">
@@ -21,9 +22,9 @@
             alt="Фотография-аватар автора снимков"
           />
           <div class="profile__info">
-            <div class="profile__name">
-              <h1 class="profile__name-text">Жак-Ив Кусто</h1>
-              <div class="edit-button">
+            <div class="profile__name-container">
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <div class="edit-button profile__edit-button">
                 <img
                   class="edit-button__image"
                   src="./images/pencil.svg"
@@ -33,7 +34,7 @@
             </div>
             <p class="profile__job">Исследователь океана</p>
           </div>
-          <div class="add-button">
+          <div class="add-button profile__add-button">
             <img
               class="add-button__image"
               src="./images/+.svg"
@@ -41,10 +42,116 @@
             />
           </div>
         </section>
+        <section class="gallery page__section">
+          <ul class="gallery__list">
+            <li class="gallery__card">
+              <h2 class="gallery__card-name">Елизово. Корякский вулкан</h2>
+              <img
+                src="./images/koryaksky_volcano_elizovo.jpg"
+                alt="Фотография. Деревянные строения на фоне большой заснеженной горы."
+                class="gallery__card-photo"
+              />
+              <img
+                src="./images/like_off.svg"
+                alt="Иконка - лайк"
+                class="gallery__card-like"
+              />
+            </li>
+            <li class="gallery__card">
+              <h2 class="gallery__card-name">Калгари</h2>
+              <img
+                src="./images/calgary_canada.jpg"
+                alt="Фотография ночного города. Небоскребы в огнях."
+                class="gallery__card-photo"
+              />
+              <img
+                src="./images/like_off.svg"
+                alt="Иконка - лайк"
+                class="gallery__card-like"
+              />
+            </li>
+            <li class="gallery__card">
+              <h2 class="gallery__card-name">Кейптаун</h2>
+              <img
+                src="./images/cape_town_south_africa.jpg"
+                alt="Фотография большой горы в облаках"
+                class="gallery__card-photo"
+              />
+              <img
+                src="./images/like_off.svg"
+                alt="Иконка - лайк"
+                class="gallery__card-like"
+              />
+            </li>
+            <li class="gallery__card">
+              <h2 class="gallery__card-name">Дубаи</h2>
+              <img
+                src="./images/dubai_united_arab_emirates.jpg"
+                alt="Фото громадного небоскреба на фоне города и голубого неба"
+                class="gallery__card-photo"
+              />
+              <img
+                src="./images/like_off.svg"
+                alt="Иконка - лайк"
+                class="gallery__card-like"
+              />
+            </li>
+            <li class="gallery__card">
+              <h2 class="gallery__card-name">Гиза</h2>
+              <img
+                src="./images/giza_egypt.jpg"
+                alt="Фотография. Верблюды на фоне египетских пирамид."
+                class="gallery__card-photo"
+              />
+              <img
+                src="./images/like_off.svg"
+                alt="Иконка - лайк"
+                class="gallery__card-like"
+              />
+            </li>
+            <li class="gallery__card">
+              <h2 class="gallery__card-name">Лагуна Бич</h2>
+              <img
+                src="./images/laguna_beach_united_states.jpg"
+                alt="Фотография скалистого побережья на фоне заката солнца"
+                class="gallery__card-photo"
+              />
+              <img
+                src="./images/like_off.svg"
+                alt="Иконка - лайк"
+                class="gallery__card-like"
+              />
+            </li>
+          </ul>
+        </section>
       </main>
-      <footer class="footer">
-        <p class="footer__copyright">&copy; 2021. Илья Зверков</p>
+      <footer class="footer page__section">
+        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
     </div>
+    <section class="popup">
+      <form class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <img
+          src="./images/close_icon.svg"
+          alt="Иконка - крестик закрытия окна"
+          class="popup__close"
+        />
+        <input
+          type="text"
+          name="username"
+          class="popup__input popup__input_type_name"
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="userjob"
+          class="popup__input popup__input_type_job"
+          placeholder=""
+        />
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+    </section>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
