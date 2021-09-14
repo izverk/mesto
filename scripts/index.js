@@ -13,7 +13,6 @@ let jobProfile = document.querySelector(".profile__job");
 
 // Выбор объектф для простановки лайков на фотографии
 let likeButton = document.querySelectorAll(".gallery__card-like");
-console.log(likeButton);
 
 // Функция открытия-закрытия popup
 function popupToggle() {
@@ -28,13 +27,13 @@ function insertJobPlaceholder() {
   jobInput.setAttribute("placeholder", jobProfile.textContent);
 }
 
-// Функция проставления лайка на фотографию
-function likeSet(e) {
-  for (n = 0; n < likeButton.length; n++) {
-    console.log(n);
-    if (e.currentTarget === e.target) {
-      likeButton[n].setAttribute("src", "./images/like_on.svg");
-    }
+// Функция переключения лайка на фотографии
+function likeToggle(e) {
+  if (e.currentTarget.getAttribute("src") === "./images/like_off.svg") {
+    e.currentTarget.setAttribute("src", "./images/like_on.svg");
+  }
+  else {
+    e.currentTarget.setAttribute("src", "./images/like_off.svg");
   }
 }
 
@@ -46,7 +45,7 @@ function formSubmitHandler(evt) {
   popupToggle();
 }
 
-// Отслеживание кликов для открытия/закрытия popup
+// Отслеживаем клики на кнопках открытия/закрытия popup
 popupOpenBtn.addEventListener("click", popupToggle);
 popupCloseBtn.addEventListener("click", popupToggle);
 
@@ -58,7 +57,6 @@ insertJobPlaceholder();
 form.addEventListener("submit", formSubmitHandler);
 
 // Отслеживаем клик на каждой кнопке лайка в галерее
-for (i = 0; i < likeButton.length; i++) {
-  console.log(i);
-  likeButton[i].addEventListener("click", likeSet);
+for (let i = 0; i < likeButton.length; i++) {
+  likeButton[i].addEventListener("click", likeToggle);
 }
