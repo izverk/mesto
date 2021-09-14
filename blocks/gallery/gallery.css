@@ -2,7 +2,7 @@
   margin-bottom: 66px;
 }
 
-@media screen and (max-width: 564px) {
+@media screen and (max-width: 544px) {
   .gallery {
     margin-bottom: 48px;
   }

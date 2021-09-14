@@ -3,24 +3,23 @@
   font-weight: 500;
   font-size: 42px;
   line-height: 1.14;
+  max-width: 75%;
   word-wrap: break-word;
 }
 
-@media screen and (max-width: 840px) {
+
+@media screen and (max-width: 700px) {
   .profile__name {
-    font-size: 35px;
+    max-width: 100%;
+    margin-right: 0;
+    text-align: center;
   }
 }
 
-@media screen and (max-width: 640px) {
+
+@media screen and (max-width: 544px) {
   .profile__name {
     font-size: 27px;
-    margin-right: 10px;
-  }
-}
-
-@media screen and (max-width: 430px) {
-  .profile__name {
     line-height: 1.22;
   }
 }

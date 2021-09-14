@@ -1,25 +1,26 @@
 .page__section {
-  padding-left: 15.6%;
-  padding-right: 15.6%;
+  /*padding-left: 15.6%;
+  padding-right: 15.6%;*/
+  max-width: 69%;
+  margin: auto;
 }
-
-@media screen and (max-width: 1120px) {
+/*
+@media screen and (max-width: 1150px) {
   .page__section {
     padding-left: 11%;
     padding-right: 11%;
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1013px) {
   .page__section {
     padding-left: 7%;
     padding-right: 7%;
   }
-}
+}*/
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 544px) {
   .page__section {
-    padding-left: 5.9%;
-    padding-right: 5.9%;
+    max-width: 88%;
   }
 }

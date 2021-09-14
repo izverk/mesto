@@ -11,6 +11,10 @@ let form = popup.querySelector(".popup__container");
 let nameProfile = document.querySelector(".profile__name");
 let jobProfile = document.querySelector(".profile__job");
 
+// Выбор объектф для простановки лайков на фотографии
+let likeButton = document.querySelectorAll(".gallery__card-like");
+console.log(likeButton);
+
 // Функция открытия-закрытия popup
 function popupToggle() {
   popup.classList.toggle("popup_opened");
@@ -22,6 +26,16 @@ function insertNamePlaceholder() {
 }
 function insertJobPlaceholder() {
   jobInput.setAttribute("placeholder", jobProfile.textContent);
+}
+
+// Функция проставления лайка на фотографию
+function likeSet(e) {
+  for (n = 0; n < likeButton.length; n++) {
+    console.log(n);
+    if (e.currentTarget === e.target) {
+      likeButton[n].setAttribute("src", "./images/like_on.svg");
+    }
+  }
 }
 
 // Обработчик события отправки формы при нажатии на кнопку "Сохранить"
@@ -40,5 +54,11 @@ popupCloseBtn.addEventListener("click", popupToggle);
 insertNamePlaceholder();
 insertJobPlaceholder();
 
-//перезаписываем поля профиля данными из формы
+// Перезаписываем поля профиля данными из формы
 form.addEventListener("submit", formSubmitHandler);
+
+// Отслеживаем клик на каждой кнопке лайка в галерее
+for (i = 0; i < likeButton.length; i++) {
+  console.log(i);
+  likeButton[i].addEventListener("click", likeSet);
+}
