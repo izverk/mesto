@@ -1,5 +1,7 @@
 .edit-button {
-  display: flex;
+  width: 10px;
+  height: 10px;
+  padding: 6px;
   border: 1px solid #fff;
   cursor: pointer;
 }
@@ -7,4 +9,3 @@
 .edit-button:hover {
   opacity: 0.6;
 }
-

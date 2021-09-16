@@ -3,11 +3,19 @@
   display: flex;
   justify-content: flex-start;
   align-items: baseline;
-  width: 100%;
 }
 
 @media screen and (max-width: 700px) {
   .profile__name-container {
+    max-width: 80%;
+    margin-bottom: 14px;
     justify-content: center;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .profile__name-container {
+    max-width: 67%;
   }
 }
