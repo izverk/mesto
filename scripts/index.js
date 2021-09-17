@@ -1,62 +1,35 @@
-// Выбор объектов для открытия и закрытия popup
+// Попап и кнопки его открытия/закрытия
 const popup = document.querySelector(".popup");
-const popupOpenBtn = document.querySelector(".edit-button");
-const popupCloseBtn = popup.querySelector(".popup__close");
-
-// Выбор объектов для вставки плейсхолдеров в поля формы
-// и перезаписи полей профиля данными из формы
+const popupOpenBtn = document.querySelector(".profile__edit-button");
+const popupCloseBtn = popup.querySelector(".popup__close-button");
+// Форма и её поля ввода данных
+let form = popup.querySelector(".popup__form");
 let nameInput = popup.querySelector(".popup__input_type_name");
 let jobInput = popup.querySelector(".popup__input_type_job");
-let form = popup.querySelector(".popup__container");
+// Поля профиля пользователя
 let nameProfile = document.querySelector(".profile__name");
 let jobProfile = document.querySelector(".profile__job");
 
-// Выбор объектф для простановки лайков на фотографии
-let likeButton = document.querySelectorAll(".gallery__card-like");
-
-// Функция открытия-закрытия popup
-function popupToggle() {
-  popup.classList.toggle("popup_opened");
+// Открытие попапа
+function popupOpen() {
+  popup.classList.add("popup_opened");
+  nameInput.value = nameProfile.textContent;
+  jobInput.value = jobProfile.textContent;
 }
-
-// Функции вставки плейсхолдеров в поля формы
-function insertNamePlaceholder() {
-  nameInput.setAttribute("placeholder", nameProfile.textContent);
+// Закрытие попапа
+function popupClose() {
+  popup.classList.remove("popup_opened");
 }
-function insertJobPlaceholder() {
-  jobInput.setAttribute("placeholder", jobProfile.textContent);
-}
-
-// Функция переключения лайка на фотографии
-function likeToggle(e) {
-  if (e.currentTarget.getAttribute("src") === "./images/like_off.svg") {
-    e.currentTarget.setAttribute("src", "./images/like_on.svg");
-  }
-  else {
-    e.currentTarget.setAttribute("src", "./images/like_off.svg");
-  }
-}
-
-// Обработчик события отправки формы при нажатии на кнопку "Сохранить"
+// Сохранение в форме ввода данных (перезапись полей профиля и закрытие попапа)
 function formSubmitHandler(evt) {
   evt.preventDefault(); // отмена стандартной отправки формы
   nameProfile.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
-  popupToggle();
+  popupClose();
 }
 
-// Отслеживаем клики на кнопках открытия/закрытия popup
-popupOpenBtn.addEventListener("click", popupToggle);
-popupCloseBtn.addEventListener("click", popupToggle);
-
-// Вставляем плейсхолдеры в поля формы
-insertNamePlaceholder();
-insertJobPlaceholder();
-
-// Перезаписываем поля профиля данными из формы
+// Отслеживаем клики на кнопках открытия/закрытия попапа
+popupOpenBtn.addEventListener("click", popupOpen);
+popupCloseBtn.addEventListener("click", popupClose);
+// Отслеживаем клик на кнопке Сохранить в форме ввода данных
 form.addEventListener("submit", formSubmitHandler);
-
-// Отслеживаем клик на каждой кнопке лайка в галерее
-for (let i = 0; i < likeButton.length; i++) {
-  likeButton[i].addEventListener("click", likeToggle);
-}

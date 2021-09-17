@@ -4,12 +4,10 @@
   background-color: #fff;
   color: #000;
   font-family: "Inter", "Arial", "Helvetica", sans-serif;
-  display: flex;
-  flex-direction: column;
-  position: relative;
   box-sizing: border-box;
   padding: 34px 36px 37px;
   border-radius: 10px;
+  position: relative;
 }
 
 @media screen and (max-width: 544px) {

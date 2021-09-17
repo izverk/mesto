@@ -15,7 +15,6 @@
         src="./images/headerlogo.svg"
         alt="Логотип сайта"
       />
-      <hr class="header__line" />
     </header>
     <main>
       <section class="profile page__section">
@@ -27,101 +26,67 @@
         <div class="profile__info">
           <div class="profile__name-container">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <img
-              class="edit-button profile__edit-button"
-              src="./images/pencil.svg"
-              alt="Иконка - карандаш"
-            />
+            <button type="button" class="profile__edit-button buttons"></button>
           </div>
           <p class="profile__job">Исследователь океана</p>
         </div>
-        <div class="add-button profile__add-button">
-          <img
-            class="add-button__image"
-            src="./images/+.svg"
-            alt="Иконка - знак плюс"
-          />
-        </div>
+        <button type="button" class="profile__add-button buttons"></button>
       </section>
       <section class="gallery page__section">
         <ul class="gallery__list">
-          <li class="gallery__card">
-            <h2 class="gallery__card-name">Елизово. Корякский вулкан</h2>
+          <li class="card">
+            <h2 class="card__name">Елизово. Корякский вулкан</h2>
             <img
               src="./images/koryaksky_volcano_elizovo.jpg"
               alt="Фотография. Деревянные строения на фоне большой заснеженной горы."
-              class="gallery__card-photo"
+              class="card__photo"
             />
-            <img
-              src="./images/like_off.svg"
-              alt="Иконка - лайк"
-              class="gallery__card-like"
-            />
+            <button type="button" class="card__like"></button>
           </li>
-          <li class="gallery__card">
-            <h2 class="gallery__card-name">Калгари</h2>
+          <li class="card">
+            <h2 class="card__name">Калгари</h2>
             <img
               src="./images/calgary_canada.jpg"
               alt="Фотография ночного города. Небоскребы в огнях."
-              class="gallery__card-photo"
+              class="card__photo"
             />
-            <img
-              src="./images/like_off.svg"
-              alt="Иконка - лайк"
-              class="gallery__card-like"
-            />
+            <button type="button" class="card__like"></button>
           </li>
-          <li class="gallery__card">
-            <h2 class="gallery__card-name">Кейптаун</h2>
+          <li class="card">
+            <h2 class="card__name">Кейптаун</h2>
             <img
               src="./images/cape_town_south_africa.jpg"
               alt="Фотография большой горы в облаках"
-              class="gallery__card-photo"
+              class="card__photo"
             />
-            <img
-              src="./images/like_off.svg"
-              alt="Иконка - лайк"
-              class="gallery__card-like"
-            />
+            <button type="button" class="card__like"></button>
           </li>
-          <li class="gallery__card">
-            <h2 class="gallery__card-name">Дубаи</h2>
+          <li class="card">
+            <h2 class="card__name">Дубаи</h2>
             <img
               src="./images/dubai_united_arab_emirates.jpg"
               alt="Фото громадного небоскреба на фоне города и голубого неба"
-              class="gallery__card-photo"
+              class="card__photo"
             />
-            <img
-              src="./images/like_off.svg"
-              alt="Иконка - лайк"
-              class="gallery__card-like"
-            />
+            <button type="button" class="card__like"></button>
           </li>
-          <li class="gallery__card">
-            <h2 class="gallery__card-name">Гиза</h2>
+          <li class="card">
+            <h2 class="card__name">Гиза</h2>
             <img
               src="./images/giza_egypt.jpg"
               alt="Фотография. Верблюды на фоне египетских пирамид."
-              class="gallery__card-photo"
+              class="card__photo"
             />
-            <img
-              src="./images/like_off.svg"
-              alt="Иконка - лайк"
-              class="gallery__card-like"
-            />
+            <button type="button" class="card__like"></button>
           </li>
-          <li class="gallery__card">
-            <h2 class="gallery__card-name">Лагуна Бич</h2>
+          <li class="card">
+            <h2 class="card__name">Лагуна Бич</h2>
             <img
               src="./images/laguna_beach_united_states.jpg"
               alt="Фотография скалистого побережья на фоне заката солнца"
-              class="gallery__card-photo"
+              class="card__photo"
             />
-            <img
-              src="./images/like_off.svg"
-              alt="Иконка - лайк"
-              class="gallery__card-like"
-            />
+            <button type="button" class="card__like"></button>
           </li>
         </ul>
       </section>
@@ -129,29 +94,25 @@
     <footer class="footer page__section">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <section class="popup">
-      <form class="popup__container">
+    <div class="popup">
+      <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <img
-          src="./images/close_icon.svg"
-          alt="Иконка - крестик закрытия окна"
-          class="popup__close"
-        />
-        <input
-          type="text"
-          name="username"
-          class="popup__input popup__input_type_name"
-          placeholder=""
-        />
-        <input
-          type="text"
-          name="userjob"
-          class="popup__input popup__input_type_job"
-          placeholder=""
-        />
-        <button type="submit" class="popup__save-button">Сохранить</button>
-      </form>
-    </section>
+        <button type="button" class="popup__close-button buttons"></button>
+        <form class="popup__form" name="profile">
+          <input
+            type="text"
+            name="username"
+            class="popup__input popup__input_type_name"
+          />
+          <input
+            type="text"
+            name="userjob"
+            class="popup__input popup__input_type_job"
+          />
+          <button type="submit" class="popup__save-button">Сохранить</button>
+        </form>
+      </div>
+    </div>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

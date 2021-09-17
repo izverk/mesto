@@ -4,10 +4,15 @@
   height: 50px;
   align-self: center;
   margin-left: auto;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  background: #000 url(../../../images/+.svg) center / 22px 22px no-repeat;
 }
 
 @media screen and (max-width: 700px) {
-  .add-button {
+  .profile__add-button {
     width: 100%;
+    margin-left: 0;
+    background-size: 16px 16px;
   }
 }
