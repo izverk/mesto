@@ -1,7 +1,7 @@
 .profile__edit-button {
   width: 24px;
   height: 24px;
-  padding: 6px;
+  padding: 0;
   border: 1px solid #fff;
   background: #000 url(../../../images/pencil.svg) center / 10px 10px no-repeat;
 }
@@ -13,7 +13,7 @@
     padding: 4.25px;
     background-size: 7.5px 7.5px;
     position: absolute;
-    top: 20px;
+    top: 13px;
     right: -28px;
   }
 }
