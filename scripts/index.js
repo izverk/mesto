@@ -1,20 +1,25 @@
-// Берем элемент попап и кнопки его открытия/закрытия
-const popup = document.querySelector('.popup');
-const popupOpenBtn = document.querySelector('.profile__edit-button');
-const popupCloseBtn = popup.querySelector('.popup__close-button');
-// Берем форму редактирования профиля и её поля ввода данных
-let form = popup.querySelector('.popup__form');
-let nameInput = popup.querySelector('.popup__input_type_name');
-let jobInput = popup.querySelector('.popup__input_type_job');
-// Берем поля профиля пользователя
-let nameProfile = document.querySelector(".profile__name");
-let jobProfile = document.querySelector(".profile__job");
-//Берем контейнер галереи для дальнейшей вставки в него карточек
+// Выбираем попап редактирования профиля пользователя и кнопки его открытия/закрытия
+const profilePopup = document.querySelector('.popup_type_profile');
+const profilePopupOpenBtn = document.querySelector('.profile__edit-button');
+const profilePopupCloseBtn = profilePopup.querySelector('.popup__close-button');
+// Выбираем форму редактирования профиля и её поля ввода данных
+let profilePopupForm = profilePopup.querySelector('.popup__form');
+let userNameInput = profilePopup.querySelector('.popup__input_type_name');
+let userJobInput = profilePopup.querySelector('.popup__input_type_job');
+// Выбираем попап добавления новой карточки в галерею
+const addCardPopup = document.querySelector('.popup_type_card');
+const addCardPopupOpenBtn = document.querySelector('.profile__add-button');
+const addCardPopupCloseBtn = addCardPopup.querySelector('.popup__close-button');
+// Выбираем форму добавления новой карточки и её поля ввода данных
+let addCardPopupForm = addCardPopup.querySelector('.popup__form');
+let placeNameInput = addCardPopup.querySelector('.popup__input_type_placename');
+let imageLinkInput = addCardPopup.querySelector('.popup__input_type_imagelink');
+// Выбираем контейнер галереи для дальнейшей вставки в него карточек
 const galleryList = document.querySelector('.gallery__list');
-//Берем шаблон для создания карточки
+// Выбираем шаблон для создания карточки
 const cardTemplate = document.querySelector('.card-template');
-//Определяем массив карточек с их именами и путями к картинкам
-//для первоначального заполнения галереи при загрузке страницы
+// Определяем массив карточек с их именами и путями к картинкам
+// для первоначального заполнения галереи при загрузке страницы
 let initialCards = [
   {
     name: 'Елизово. Корякский вулкан',
@@ -43,38 +48,57 @@ let initialCards = [
 ];
 
 
-//Создание карточки
+// Добавление карточки в галерею
 function createCard(initialCards) {
   const newCard = cardTemplate.content.cloneNode(true);
   newCard.querySelector('.card__name').textContent = initialCards.name;
   newCard.querySelector('.card__photo').setAttribute('src', initialCards.link);
-  galleryList.append(newCard);
+  galleryList.prepend(newCard);
 }
 // Открытие попапа
-function popupOpen() {
-  popup.classList.add("popup_opened");
-  nameInput.value = nameProfile.textContent;
-  jobInput.value = jobProfile.textContent;
+function popupOpen(popupType) {
+  popupType.classList.add('popup_opened');
+  if (popupType === profilePopup) {
+    userNameInput.value = document.querySelector('.profile__name').textContent;
+    userJobInput.value = document.querySelector('.profile__job').textContent;
+  }
 }
 // Закрытие попапа
-function popupClose() {
-  popup.classList.remove("popup_opened");
+function popupClose(popupType) {
+  popupType.classList.remove('popup_opened');
 }
-// Сохранение в форме ввода данных (перезапись полей профиля и закрытие попапа)
-function formSubmitHandler(evt) {
+// Обработка нажатия кнопки Сохранение в форме редактирования профиля
+// (перезапись полей профиля и закрытие попапа)
+function profileFormSubmitHandler(evt) {
   evt.preventDefault(); // отмена стандартной отправки формы
-  nameProfile.textContent = nameInput.value;
-  jobProfile.textContent = jobInput.value;
-  popupClose();
+  document.querySelector('.profile__name').textContent = userNameInput.value;
+  document.querySelector('.profile__job').textContent = userJobInput.value;
+  popupClose(profilePopup);
+}
+// Обработка нажатия кнопки Сохранение в форме добавления карточки
+function addCardFormSubmitHandler(evt) {
+  evt.preventDefault(); // отмена стандартной отправки формы
+  let newPlace = {
+    name: placeNameInput.value,
+    link: imageLinkInput.value
+  };
+  initialCards.splice(0, 6, newPlace);
+  initialCards.forEach(createCard);
+  placeNameInput.value = '';
+  imageLinkInput.value = '';
+  popupClose(addCardPopup);
 }
 
 
-//Заполняем галерею карточками
+// Заполняем галерею карточками
 initialCards.forEach(createCard);
-// console.log(card.querySelector('.card__photo'))
-// console.dir(card.querySelector('.card__photo'))
-// Отслеживаем клики на кнопках открытия/закрытия попапа
-popupOpenBtn.addEventListener("click", popupOpen);
-popupCloseBtn.addEventListener("click", popupClose);
-// Отслеживаем клик на кнопке Сохранить в форме ввода данных
-form.addEventListener("submit", formSubmitHandler);
+// Отслеживаем клики на кнопках открытия/закрытия формы редактирования профиля
+profilePopupOpenBtn.addEventListener('click', () => popupOpen(profilePopup));
+profilePopupCloseBtn.addEventListener('click', () => popupClose(profilePopup));
+// Отслеживаем клик на кнопке Сохранить в форме редактирования профиля
+profilePopupForm.addEventListener('submit', profileFormSubmitHandler);
+// Отслеживаем клики на кнопках открытия/закрытия формы добавления новой карточки
+addCardPopupOpenBtn.addEventListener('click', () => popupOpen(addCardPopup));
+addCardPopupCloseBtn.addEventListener('click', () => popupClose(addCardPopup));
+// Отслеживаем клик на кнопке Сохранить в форме добавления карточки
+addCardPopupForm.addEventListener('submit', addCardFormSubmitHandler);

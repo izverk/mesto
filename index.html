@@ -32,71 +32,57 @@
         </div>
         <button type="button" class="profile__add-button buttons"></button>
       </section>
-      <section class="gallery page__section">
-        <ul class="gallery__list">
-          <!--
-          <li class="card">
-            <h2 class="card__name">Елизово. Корякский вулкан</h2>
-            <img
-              src="./images/koryaksky_volcano_elizovo.jpg"
-              alt="Фотография. Деревянные строения на фоне большой заснеженной горы."
-              class="card__photo"
-            />
-            <button type="button" class="card__like"></button>
-          </li>
-          <li class="card">
-            <h2 class="card__name">Калгари</h2>
-            <img
-              src="./images/calgary_canada.jpg"
-              alt="Фотография ночного города. Небоскребы в огнях."
-              class="card__photo"
-            />
-            <button type="button" class="card__like"></button>
-          </li>
-          <li class="card">
-            <h2 class="card__name">Кейптаун</h2>
-            <img
-              src="./images/cape_town_south_africa.jpg"
-              alt="Фотография большой горы в облаках"
-              class="card__photo"
-            />
-            <button type="button" class="card__like"></button>
-          </li>
-          <li class="card">
-            <h2 class="card__name">Дубаи</h2>
-            <img
-              src="./images/dubai_united_arab_emirates.jpg"
-              alt="Фото громадного небоскреба на фоне города и голубого неба"
-              class="card__photo"
-            />
-            <button type="button" class="card__like"></button>
-          </li>
-          <li class="card">
-            <h2 class="card__name">Лагуна Бич</h2>
-            <img
-              src="./images/laguna_beach_united_states.jpg"
-              alt="Фотография скалистого побережья на фоне заката солнца"
-              class="card__photo"
-            />
-            <button type="button" class="card__like"></button>
-          </li>
-          <li class="card">
-            <h2 class="card__name">Гиза</h2>
-            <img
-              src="./images/giza_egypt.jpg"
-              alt="Фотография. Верблюды на фоне египетских пирамид."
-              class="card__photo"
-            />
-            <button type="button" class="card__like"></button>
-          </li>
-          -->
-        </ul>
+      <section
+        class="gallery page__section"
+        aria-label="Секция с карточками мест"
+      >
+        <ul class="gallery__list"></ul>
       </section>
     </main>
     <footer class="footer page__section">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_profile">
+      <div class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <button type="button" class="popup__close-button buttons"></button>
+        <form class="popup__form" name="profile">
+          <input
+            type="text"
+            name="username"
+            class="popup__input popup__input_type_name"
+          />
+          <input
+            type="text"
+            name="userjob"
+            class="popup__input popup__input_type_job"
+          />
+          <button type="submit" class="popup__save-button">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_card">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <button type="button" class="popup__close-button buttons"></button>
+        <form class="popup__form" name="card">
+          <input
+            type="text"
+            name="placename"
+            class="popup__input popup__input_type_placename"
+            placeholder="Название"
+          />
+          <input
+            type="text"
+            name="imagelink"
+            class="popup__input popup__input_type_imagelink"
+            placeholder="Ссылка на картинку"
+          />
+          <button type="submit" class="popup__save-button">Создать</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_image">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <button type="button" class="popup__close-button buttons"></button>
