@@ -10,6 +10,34 @@ let jobInput = popup.querySelector(".popup__input_type_job");
 let nameProfile = document.querySelector(".profile__name");
 let jobProfile = document.querySelector(".profile__job");
 
+//Массив карточек с их именами и фотографиями
+const initialCards = [
+  {
+    name: 'Елизово. Корякский вулкан',
+    link: './images/koryaksky_volcano_elizovo.jpg'
+  },
+  {
+    name: 'Калгари',
+    link: './images/calgary_canada.jpg'
+  },
+  {
+    name: 'Кейптаун',
+    link: './images/cape_town_south_africa.jpg'
+  },
+  {
+    name: 'Дубаи',
+    link: './images/dubai_united_arab_emirates.jpg'
+  },
+  {
+    name: 'Лагуна Бич',
+    link: './images/laguna_beach_united_states.jpg'
+  },
+  {
+    name: 'Гиза',
+    link: './images/giza_egypt.jpg'
+  }
+];
+
 // Открытие попапа
 function popupOpen() {
   popup.classList.add("popup_opened");
