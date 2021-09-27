@@ -50,11 +50,16 @@ let initialCards = [
 
 // Добавление карточки в галерею
 function createCard(initialCards) {
-  const newCard = cardTemplate.content.cloneNode(true);
-  newCard.querySelector('.card__name').textContent = initialCards.name;
-  newCard.querySelector('.card__photo').setAttribute('src', initialCards.link);
+  const newCard = cardTemplate.content.cloneNode(true);// клонирование содержимого в переменную
+  newCard.querySelector('.card__name').textContent = initialCards.name;// наполняем текстовым контентом заголовок
+  newCard.querySelector('.card__photo').setAttribute('src', initialCards.link);// задаем путь к картинке
+  newCard.querySelector('.card__like').addEventListener('click', likeToggle);
   galleryList.prepend(newCard);
 }
+// Переключение лайка в карточке
+function likeToggle(evt) {
+  evt.currentTarget.classList.toggle('card__like_active')
+};
 // Открытие попапа
 function popupOpen(popupType) {
   popupType.classList.add('popup_opened');
@@ -69,14 +74,14 @@ function popupClose(popupType) {
 }
 // Обработка нажатия кнопки Сохранение в форме редактирования профиля
 // (перезапись полей профиля и закрытие попапа)
-function profileFormSubmitHandler(evt) {
+function profileSubmitHandler(evt) {
   evt.preventDefault(); // отмена стандартной отправки формы
   document.querySelector('.profile__name').textContent = userNameInput.value;
   document.querySelector('.profile__job').textContent = userJobInput.value;
   popupClose(profilePopup);
 }
 // Обработка нажатия кнопки Сохранение в форме добавления карточки
-function addCardFormSubmitHandler(evt) {
+function addCardSubmitHandler(evt) {
   evt.preventDefault(); // отмена стандартной отправки формы
   let newPlace = {
     name: placeNameInput.value,
@@ -96,9 +101,9 @@ initialCards.forEach(createCard);
 profilePopupOpenBtn.addEventListener('click', () => popupOpen(profilePopup));
 profilePopupCloseBtn.addEventListener('click', () => popupClose(profilePopup));
 // Отслеживаем клик на кнопке Сохранить в форме редактирования профиля
-profilePopupForm.addEventListener('submit', profileFormSubmitHandler);
+profilePopupForm.addEventListener('submit', profileSubmitHandler);
 // Отслеживаем клики на кнопках открытия/закрытия формы добавления новой карточки
 addCardPopupOpenBtn.addEventListener('click', () => popupOpen(addCardPopup));
 addCardPopupCloseBtn.addEventListener('click', () => popupClose(addCardPopup));
 // Отслеживаем клик на кнопке Сохранить в форме добавления карточки
-addCardPopupForm.addEventListener('submit', addCardFormSubmitHandler);
+addCardPopupForm.addEventListener('submit', addCardSubmitHandler);
