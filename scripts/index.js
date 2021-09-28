@@ -59,7 +59,7 @@ function createCard(initialCards) {
 // Открытие попапа (любого)
 function popupOpen(popupType) {
   popupType.classList.add('popup_opened');
-  if (popupType === profilePopup) {
+  if (popupType === profilePopup) { // условие для попапа редактирования профиля - заполняет инпуты из полей текущего профиля
     userNameInput.value = document.querySelector('.profile__name').textContent;
     userJobInput.value = document.querySelector('.profile__job').textContent;
   }
