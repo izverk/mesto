@@ -6,7 +6,7 @@ const profilePopupCloseBtn = profilePopup.querySelector('.popup__close-button');
 let profilePopupForm = profilePopup.querySelector('.popup__form');
 let userNameInput = profilePopup.querySelector('.popup__input_type_name');
 let userJobInput = profilePopup.querySelector('.popup__input_type_job');
-// Выбираем попап добавления новой карточки в галерею
+// Выбираем попап добавления новой карточки в галерею и кнопки его открытия/закрытия
 const addCardPopup = document.querySelector('.popup_type_card');
 const addCardPopupOpenBtn = document.querySelector('.profile__add-button');
 const addCardPopupCloseBtn = addCardPopup.querySelector('.popup__close-button');
@@ -20,47 +20,43 @@ const galleryList = document.querySelector('.gallery__list');
 const cardTemplate = document.querySelector('.card-template');
 // Определяем массив карточек с их именами и путями к картинкам
 // для первоначального заполнения галереи при загрузке страницы
-let initialCards = [
+const initialCards = [
   {
-    name: 'Елизово. Корякский вулкан',
-    link: './images/koryaksky_volcano_elizovo.jpg'
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
   },
   {
-    name: 'Калгари',
-    link: './images/calgary_canada.jpg'
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
   },
   {
-    name: 'Кейптаун',
-    link: './images/cape_town_south_africa.jpg'
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
   },
   {
-    name: 'Дубаи',
-    link: './images/dubai_united_arab_emirates.jpg'
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
   },
   {
-    name: 'Лагуна Бич',
-    link: './images/laguna_beach_united_states.jpg'
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
   },
   {
-    name: 'Гиза',
-    link: './images/giza_egypt.jpg'
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
 
-
 // Добавление карточки в галерею
 function createCard(initialCards) {
-  const newCard = cardTemplate.content.cloneNode(true);// клонирование содержимого в переменную
-  newCard.querySelector('.card__name').textContent = initialCards.name;// наполняем текстовым контентом заголовок
-  newCard.querySelector('.card__photo').setAttribute('src', initialCards.link);// задаем путь к картинке
-  newCard.querySelector('.card__like').addEventListener('click', likeToggle);
+  const newCard = cardTemplate.content.cloneNode(true);// клонирование шаблона
+  newCard.querySelector('.card__name').textContent = initialCards.name;// установка заголовка карточки
+  newCard.querySelector('.card__photo').setAttribute('src', initialCards.link);// установка пути к картинке карточки
+  newCard.querySelector('.card__like').addEventListener('click', likeToggle);// установка слушателя для кнопки Лайк
+  newCard.querySelector('.card__delete').addEventListener('click', deleteCard);// установка слушателя для кнопки Удалить
   galleryList.prepend(newCard);
 }
-// Переключение лайка в карточке
-function likeToggle(evt) {
-  evt.currentTarget.classList.toggle('card__like_active')
-};
-// Открытие попапа
+// Открытие попапа (любого)
 function popupOpen(popupType) {
   popupType.classList.add('popup_opened');
   if (popupType === profilePopup) {
@@ -68,7 +64,7 @@ function popupOpen(popupType) {
     userJobInput.value = document.querySelector('.profile__job').textContent;
   }
 }
-// Закрытие попапа
+// Закрытие попапа (любого)
 function popupClose(popupType) {
   popupType.classList.remove('popup_opened');
 }
@@ -87,13 +83,21 @@ function addCardSubmitHandler(evt) {
     name: placeNameInput.value,
     link: imageLinkInput.value
   };
-  initialCards.splice(0, 6, newPlace);
+  initialCards.splice(0, initialCards.length, newPlace);// обновление массива карточек данными из формы
   initialCards.forEach(createCard);
   placeNameInput.value = '';
   imageLinkInput.value = '';
   popupClose(addCardPopup);
 }
-
+// Переключение лайка в карточке
+function likeToggle(evt) {
+  evt.currentTarget.classList.toggle('card__like_active')
+};
+// Удаление карточки
+function deleteCard(evt) {
+  const deletedCard = evt.currentTarget.closest('.card');
+  deletedCard.remove();
+};
 
 // Заполняем галерею карточками
 initialCards.forEach(createCard);

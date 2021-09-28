@@ -6,7 +6,7 @@
   align-self: start;
   order: 3;
   cursor: pointer;
-  background: #fff url(../../../images/like_off.svg) center / 100% 100% no-repeat;
+  background: transparent url(../../../images/like_off.svg) center / 100% 100% no-repeat;
   border: none;
 }
 
