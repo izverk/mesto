@@ -1,14 +1,14 @@
 // ----------ПЕРЕМЕННЫЕ----------
 
 // Объекты попапа редактирования профиля пользователя
-const editProfilePopup = document.querySelector(".popup_type_profile");
-const editProfilePopupOpenBtn = document.querySelector(".profile__edit-button");
-const editProfilePopupCloseBtn = editProfilePopup.querySelector(
+const ProfilePopup = document.querySelector(".popup_type_profile");
+const ProfilePopupOpenBtn = document.querySelector(".profile__edit-button");
+const ProfilePopupCloseBtn = ProfilePopup.querySelector(
   ".popup__close-button"
 );
-const editProfilePopupForm = editProfilePopup.querySelector(".popup__form");
-const userNameInput = editProfilePopup.querySelector(".popup__input_type_name");
-const userJobInput = editProfilePopup.querySelector(".popup__input_type_job");
+const ProfilePopupForm = ProfilePopup.querySelector(".popup__form");
+const userNameInput = ProfilePopup.querySelector(".popup__input_type_name");
+const userJobInput = ProfilePopup.querySelector(".popup__input_type_job");
 // Объекты попапа добавления новой карточки в галерею
 const cardPopup = document.querySelector(".popup_type_card");
 const cardPopupOpenBtn = document.querySelector(".profile__add-button");
@@ -77,7 +77,7 @@ function createCard(initialCards) {
 // Открытие попапов
 function openPopup(popupType) {
   popupType.classList.add("popup_opened");
-  if (popupType === editProfilePopup) {
+  if (popupType === ProfilePopup) {
     userNameInput.value = document.querySelector(".profile__name").textContent;
     userJobInput.value = document.querySelector(".profile__job").textContent;
   }
@@ -98,7 +98,7 @@ function profileSubmitHandler(evt) {
   evt.preventDefault(); // отмена стандартной отправки формы
   document.querySelector(".profile__name").textContent = userNameInput.value;
   document.querySelector(".profile__job").textContent = userJobInput.value;
-  closePopup(editProfilePopup);
+  closePopup(ProfilePopup);
 }
 // Обработка нажатия кнопки Сохранение в форме добавления карточки
 function addCardSubmitHandler(evt) {
@@ -128,13 +128,13 @@ function deleteCard(evt) {
 // Заполняем галерею карточками при загрузке страницы
 initialCards.forEach(createCard);
 // Отслеживаем открытие/закрытие/сохранение попапа редактирования профиля
-editProfilePopupOpenBtn.addEventListener("click", () =>
-  openPopup(editProfilePopup)
+ProfilePopupOpenBtn.addEventListener("click", () =>
+  openPopup(ProfilePopup)
 );
-editProfilePopupCloseBtn.addEventListener("click", () =>
-  closePopup(editProfilePopup)
+ProfilePopupCloseBtn.addEventListener("click", () =>
+  closePopup(ProfilePopup)
 );
-editProfilePopupForm.addEventListener("submit", profileSubmitHandler);
+ProfilePopupForm.addEventListener("submit", profileSubmitHandler);
 // Отслеживаем открытие/закрытие/сохранение попапа добавления новой карточки
 cardPopupOpenBtn.addEventListener("click", () => openPopup(cardPopup));
 cardPopupCloseBtn.addEventListener("click", () => closePopup(cardPopup));
