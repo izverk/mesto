@@ -85,14 +85,20 @@
     <div class="popup popup_type_image">
       <figure class="popup__container popup__container_type_image">
         <button type="button" class="popup__close-button buttons"></button>
-        <img class="popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Фотография места">
+        <img
+          class="popup__image"
+          src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
+          alt="Фотография места"
+        />
         <figcaption class="popup__caption"></figcaption>
       </figure>
     </div>
     <template class="card-template">
       <li class="card">
         <h2 class="card__name"></h2>
-        <img class="card__photo" />
+        <div class="card__photo-container">
+          <img class="card__photo" />
+        </div>
         <button type="button" class="card__like"></button>
         <button type="button" class="card__delete"></button>
       </li>

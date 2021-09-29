@@ -1,9 +1,6 @@
 .card__photo {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  margin-bottom: 25px;
-  order: 1;
-  border-radius: 10px 10px 0 0;
-  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
 }
