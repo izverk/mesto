@@ -32,7 +32,6 @@ const photoPopupCaption = photoPopup.querySelector(".popup__caption");
 // Шаблон карточки
 const cardTemplate = document.querySelector(".card-template");
 
-
 // ----------ФУНКЦИИ----------
 
 // Создание карточки (подготовка разметки, установка слушателей)
@@ -52,7 +51,7 @@ function createCard(initialCard) {
 }
 
 // Добавление карточки в галерею
-function addCardToGallery (card) {
+function addCardToGallery(card) {
   gallery.prepend(card);
 }
 
@@ -62,43 +61,45 @@ function createAndAddCardToGallery(initialCard) {
   addCardToGallery(newCard);
 }
 
-// Добавление новой карточки из формы ввода
+// Добавление новой карточки места из формы ввода
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
-  const newPlace = [
-    {
-      name: placeNameInput.value,
-      link: imageLinkInput.value,
-      description: `Фотография места. ${placeNameInput.value}`,
-    },
-  ];
-  newPlace.forEach(createCard);
+  const newPlace = {
+    name: placeNameInput.value,
+    link: imageLinkInput.value,
+    description: `Фотография места. ${placeNameInput.value}`,
+  };
+  createAndAddCardToGallery(newPlace);
   closePopup(cardPopup);
   placeNameInput.value = "";
   imageLinkInput.value = "";
 }
-// Добавление нового профиля (перезапись полей профиля и закрытие попапа)
-function editProfileSubmitHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = userNameInput.value;
-  profileJob.textContent = userJobInput.value;
-  closePopup(profilePopup);
-}
+
 // Открытие попапа
 function openPopup(popupType) {
   popupType.classList.add("popup_opened");
-  if (popupType === profilePopup) {
-    userNameInput.value = document.querySelector(".profile__name").textContent;
-    userJobInput.value = document.querySelector(".profile__job").textContent;
-  }
 }
 // Закрытие попапа
 function closePopup(popupType) {
   popupType.classList.remove("popup_opened");
 }
+// Открытие попапа редактирования профиля пользователя
+function openProfilePopup() {
+  userNameInput.value = document.querySelector(".profile__name").textContent;
+  userJobInput.value = document.querySelector(".profile__job").textContent;
+  openPopup(profilePopup);
+}
+// Добавление нового профиля пользователя (перезапись полей профиля и закрытие попапа)
+function saveProfileSubmitHandler(evt) {
+  evt.preventDefault();
+  profileName.textContent = userNameInput.value;
+  profileJob.textContent = userJobInput.value;
+  closePopup(profilePopup);
+}
 // Открытие фотографии для просмотра
 function openPhoto(evt) {
   photoPopupImage.src = evt.currentTarget.src;
+  photoPopupImage.alt = evt.currentTarget.alt;
   photoPopupCaption.textContent =
     evt.currentTarget.parentElement.previousElementSibling.textContent;
   openPopup(photoPopup);
@@ -119,9 +120,9 @@ function deleteCard(evt) {
 initialCards.forEach(createAndAddCardToGallery);
 
 // Отслеживаем события попапа редактирования профиля
-profilePopupOpenBtn.addEventListener("click", () => openPopup(profilePopup));
+profilePopupOpenBtn.addEventListener("click", openProfilePopup);
 profilePopupCloseBtn.addEventListener("click", () => closePopup(profilePopup));
-profilePopupForm.addEventListener("submit", editProfileSubmitHandler);
+profilePopupForm.addEventListener("submit", saveProfileSubmitHandler);
 
 // Отслеживаем события попапа добавления новой карточки
 cardPopupOpenBtn.addEventListener("click", () => openPopup(cardPopup));
