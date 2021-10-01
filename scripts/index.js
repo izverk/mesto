@@ -5,12 +5,12 @@ const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
 
 // Объекты попапа редактирования профиля пользователя
-const ProfilePopup = document.querySelector(".popup_type_profile");
-const ProfilePopupOpenBtn = document.querySelector(".profile__edit-button");
-const ProfilePopupCloseBtn = ProfilePopup.querySelector(".popup__close-button");
-const ProfilePopupForm = ProfilePopup.querySelector(".popup__form");
-const userNameInput = ProfilePopup.querySelector(".popup__input_type_name");
-const userJobInput = ProfilePopup.querySelector(".popup__input_type_job");
+const profilePopup = document.querySelector(".popup_type_profile");
+const profilePopupOpenBtn = document.querySelector(".profile__edit-button");
+const profilePopupCloseBtn = profilePopup.querySelector(".popup__close-button");
+const profilePopupForm = profilePopup.querySelector(".popup__form");
+const userNameInput = profilePopup.querySelector(".popup__input_type_name");
+const userJobInput = profilePopup.querySelector(".popup__input_type_job");
 
 // Объекты попапа добавления новой карточки в галерею
 const cardPopup = document.querySelector(".popup_type_card");
@@ -29,44 +29,9 @@ const photoPopupCloseBtn = photoPopup.querySelector(".popup__close-button");
 const photoPopupImage = photoPopup.querySelector(".popup__image");
 const photoPopupCaption = photoPopup.querySelector(".popup__caption");
 
-// Объекты шаблона карточки
+// Шаблон карточки
 const cardTemplate = document.querySelector(".card-template");
 
-// Массив карточек для первоначального заполнения галереи при загрузке страницы
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    description: "Фотография долины между высоких гор",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    description: "Фотография небольшой реки между заснеженных лесных склонов",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    description:
-      "Фотография комплекса панельных многоэтажек в наступающих сумерках",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    description: "Фотография одинокого вулкана в пустынной местности",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    description:
-      "Фотография одноколейной железной дороги, уходящей вдаль через лес",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    description: "Фотография прибрежных скал Байкала",
-  },
-];
 
 // ----------ФУНКЦИИ----------
 
@@ -105,12 +70,12 @@ function editProfileSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = userNameInput.value;
   profileJob.textContent = userJobInput.value;
-  closePopup(ProfilePopup);
+  closePopup(profilePopup);
 }
 // Открытие попапа
 function openPopup(popupType) {
   popupType.classList.add("popup_opened");
-  if (popupType === ProfilePopup) {
+  if (popupType === profilePopup) {
     userNameInput.value = document.querySelector(".profile__name").textContent;
     userJobInput.value = document.querySelector(".profile__job").textContent;
   }
@@ -142,9 +107,9 @@ function deleteCard(evt) {
 initialCards.forEach(createCard);
 
 // Отслеживаем события попапа редактирования профиля
-ProfilePopupOpenBtn.addEventListener("click", () => openPopup(ProfilePopup));
-ProfilePopupCloseBtn.addEventListener("click", () => closePopup(ProfilePopup));
-ProfilePopupForm.addEventListener("submit", editProfileSubmitHandler);
+profilePopupOpenBtn.addEventListener("click", () => openPopup(profilePopup));
+profilePopupCloseBtn.addEventListener("click", () => closePopup(profilePopup));
+profilePopupForm.addEventListener("submit", editProfileSubmitHandler);
 
 // Отслеживаем события попапа добавления новой карточки
 cardPopupOpenBtn.addEventListener("click", () => openPopup(cardPopup));
