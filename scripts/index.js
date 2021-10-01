@@ -35,7 +35,7 @@ const cardTemplate = document.querySelector(".card-template");
 
 // ----------ФУНКЦИИ----------
 
-// Создание и добавление карточки в галерею
+// Создание карточки (подготовка разметки, установка слушателей)
 function createCard(initialCard) {
   const newCard = cardTemplate.content.cloneNode(true);
   const newCardName = newCard.querySelector(".card__name");
@@ -48,8 +48,20 @@ function createCard(initialCard) {
   newCardPhoto.addEventListener("click", openPhoto);
   newCardLike.addEventListener("click", likeToggle);
   newCardDeleteBtn.addEventListener("click", deleteCard);
-  gallery.prepend(newCard);
+  return newCard;
 }
+
+// Добавление карточки в галерею
+function addCardToGallery (card) {
+  gallery.prepend(card);
+}
+
+// Создание и добавление карточки в галерею
+function createAndAddCardToGallery(initialCard) {
+  newCard = createCard(initialCard);
+  addCardToGallery(newCard);
+}
+
 // Добавление новой карточки из формы ввода
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
@@ -104,7 +116,7 @@ function deleteCard(evt) {
 // ----------ДЕЙСТВИЯ----------
 
 // Заполняем галерею карточками при загрузке страницы
-initialCards.forEach(createCard);
+initialCards.forEach(createAndAddCardToGallery);
 
 // Отслеживаем события попапа редактирования профиля
 profilePopupOpenBtn.addEventListener("click", () => openPopup(profilePopup));
