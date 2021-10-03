@@ -44,7 +44,7 @@ function createCard(initialCard) {
   newCardName.textContent = initialCard.name;
   newCardPhoto.setAttribute("src", initialCard.link);
   newCardPhoto.setAttribute("alt", initialCard.description);
-  newCardPhoto.addEventListener("click", openPhoto);
+  newCardPhoto.addEventListener("click", () => openPhoto(newCardName.textContent, newCardPhoto.src, newCardPhoto.alt));
   newCardLike.addEventListener("click", likeToggle);
   newCardDeleteBtn.addEventListener("click", deleteCard);
   return newCard;
@@ -57,7 +57,7 @@ function addCardToGallery(card) {
 
 // Создание и добавление карточки в галерею
 function createAndAddCardToGallery(initialCard) {
-  newCard = createCard(initialCard);
+  const newCard = createCard(initialCard);
   addCardToGallery(newCard);
 }
 
@@ -97,11 +97,10 @@ function saveProfileSubmitHandler(evt) {
   closePopup(profilePopup);
 }
 // Открытие фотографии для просмотра
-function openPhoto(evt) {
-  photoPopupImage.src = evt.currentTarget.src;
-  photoPopupImage.alt = evt.currentTarget.alt;
-  photoPopupCaption.textContent =
-    evt.currentTarget.parentElement.previousElementSibling.textContent;
+function openPhoto(name, link, alt) {
+  photoPopupCaption.textContent = name;
+  photoPopupImage.src = link;
+  photoPopupImage.alt = alt;
   openPopup(photoPopup);
 }
 // Переключение лайка в карточке
