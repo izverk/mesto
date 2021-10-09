@@ -75,20 +75,70 @@ function addCardSubmitHandler(evt) {
   imageLinkInput.value = "";
 }
 
-// Открытие попапа
-function openPopup(popupType) {
-  popupType.classList.add("popup_opened");
+// Первичная проверка валидности полей формы перед её открытием
+// и установка нужных состояний элементам формы
+function checkOpenedForm(popupType) {
+  const form = popupType.querySelector(".popup__form");
+  const inputList = Array.from(form.querySelectorAll(".popup__input"));
+  toggleButtonState(form, inputList);
+  inputList.forEach((input) => {
+    isValid(form, input);
+  });
 }
+
+// Закрытие попапа кликом на оверлей
+function сlosePopupByMouse(evt) {
+  if (evt.currentTarget === evt.target) {
+    closePopup(evt.currentTarget);
+    evt.currentTarget.removeEventListener("mousedown", сlosePopupByMouse);
+  }
+}
+
+// Закрытие попапа нажатием Esc
+function сlosePopupByEscape(evt) {
+  const key = evt.keyCode;
+  const currentPopup = document.querySelector(".popup_opened");
+  console.log(key);
+  if (key === 27) {
+    closePopup(currentPopup);
+  }
+  document.removeEventListener("keydown", сlosePopupByEscape);
+}
+
+// Открытие попапа и установка слушателя для закрытия по клику на оверлей или нажатию Esc
+function openPopup(popupType) {
+  checkOpenedForm(popupType);
+  popupType.classList.add("popup_opened");
+  popupType.addEventListener("mousedown", сlosePopupByMouse);
+  document.addEventListener("keydown", сlosePopupByEscape);
+}
+
+// Очистка элементов формы (значений инпутов и сообщений об ошибке)
+function clearForm(popupType) {
+  const form = popupType.querySelector(".popup__form");
+  const inputList = Array.from(form.querySelectorAll(".popup__input"));
+  const inputErrorList = inputList.map((input) => {
+    return form.querySelector(`.${input.id}-error`);
+  });
+  form.reset();
+  inputErrorList.forEach((inputError) => {
+    inputError.textContent = "";
+  });
+}
+
 // Закрытие попапа
 function closePopup(popupType) {
   popupType.classList.remove("popup_opened");
+  clearForm(popupType);
 }
+
 // Открытие попапа редактирования профиля пользователя
 function openProfilePopup() {
   userNameInput.value = document.querySelector(".profile__name").textContent;
   userJobInput.value = document.querySelector(".profile__job").textContent;
   openPopup(profilePopup);
 }
+
 // Добавление нового профиля пользователя (перезапись полей профиля и закрытие попапа)
 function saveProfileSubmitHandler(evt) {
   evt.preventDefault();
@@ -96,6 +146,7 @@ function saveProfileSubmitHandler(evt) {
   profileJob.textContent = userJobInput.value;
   closePopup(profilePopup);
 }
+
 // Открытие фотографии для просмотра
 function openPhoto(evt) {
   photoPopupImage.src = evt.currentTarget.src;
@@ -104,10 +155,12 @@ function openPhoto(evt) {
     evt.currentTarget.parentElement.previousElementSibling.textContent;
   openPopup(photoPopup);
 }
+
 // Переключение лайка в карточке
 function likeToggle(evt) {
   evt.currentTarget.classList.toggle("card__like_active");
 }
+
 // Удаление карточки
 function deleteCard(evt) {
   const deletedCard = evt.currentTarget.closest(".card");
