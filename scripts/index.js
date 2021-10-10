@@ -120,7 +120,7 @@ function isPhotoPopup(currentPopup) {
   return currentPopup.classList.contains("popup_type_image");
 }
 
-// Очистка формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
+// Сброс формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
 function clearForm(currentPopup) {
   const form = currentPopup.querySelector(".popup__form");
   const inputList = Array.from(form.querySelectorAll(".popup__input"));
@@ -129,28 +129,29 @@ function clearForm(currentPopup) {
   });
   const submitButton = form.querySelector(".popup__save-button");
   form.reset();
-  removeErrorInputsClass(inputList);
-  removeErrorInputsMessages(inputErrorList);
-  removeSubmitButtonClass(submitButton);
+  resetInputsClass(inputList);
+  resetErrorMessages(inputErrorList);
+  resetSubmitButton(submitButton);
 }
 
-// Удаление стилей некорректных инпутов
-function removeErrorInputsClass(inputList) {
+// Сброс стилей невалидных инпутов
+function resetInputsClass(inputList) {
   inputList.forEach((input) => {
     input.classList.remove("popup__input_type_error");
   });
 }
 
-// Удаление сообщений об ошибках ввода
-function removeErrorInputsMessages(inputErrorList) {
+// Сброс сообщений об ошибках ввода
+function resetErrorMessages(inputErrorList) {
   inputErrorList.forEach((inputError) => {
     inputError.textContent = "";
   });
 }
 
-// Удаление стиля неактивной кнопки
-function removeSubmitButtonClass(submitButton) {
+// Сброс состояния кнопки отправки формы
+function resetSubmitButton(submitButton) {
   submitButton.classList.remove("popup__save-button_inactive");
+  submitButton.removeAttribute("disabled");
 }
 
 // Закрытие попапа кликом на оверлей
