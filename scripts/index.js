@@ -32,6 +32,7 @@ const photoPopupCaption = photoPopup.querySelector(".popup__caption");
 // Шаблон карточки
 const cardTemplate = document.querySelector(".card-template");
 
+
 // ----------ФУНКЦИИ----------
 
 // Создание карточки (подготовка разметки, установка слушателей)
@@ -71,75 +72,9 @@ function addCardSubmitHandler(evt) {
   };
   createAndAddCardToGallery(newPlace);
   closePopup(cardPopup);
-  placeNameInput.value = "";
-  imageLinkInput.value = "";
 }
 
-// Закрытие попапа кликом на оверлей
-function сlosePopupByMouse(evt) {
-  if (evt.currentTarget === evt.target) {
-    closePopup(evt.currentTarget);
-  }
-}
-
-// Закрытие попапа нажатием Esc
-function сlosePopupByEscape(evt) {
-  const key = evt.keyCode;
-  const currentPopup = document.querySelector(".popup_opened");
-  if (key === 27) {
-    closePopup(currentPopup);
-  }
-}
-
-// Удаление стилей некорректных инпутов
-function removeErrorInputsClass(inputList) {
-  inputList.forEach((input) => {
-    input.classList.remove("popup__input_type_error");
-  });
-}
-
-// Удаление сообщений об ошибках ввода
-function removeErrorInputsMessages(inputErrorList) {
-  inputErrorList.forEach((inputError) => {
-    inputError.textContent = "";
-  });
-}
-
-// Удаление стиля неактивной кнопки
-function removeSubmitButtonClass(submitButton) {
-  submitButton.classList.remove("popup__save-button_inactive");
-}
-
-// Очистка формы (значений инпутов, сообщений об ошибке, состояния кнопки)
-function clearForm(currentPopup) {
-  const form = currentPopup.querySelector(".popup__form");
-  const inputList = Array.from(form.querySelectorAll(".popup__input"));
-  const inputErrorList = inputList.map((input) => {
-    return form.querySelector(`.${input.id}-error`);
-  });
-  const submitButton = form.querySelector(".popup__save-button");
-  form.reset();
-  removeErrorInputsClass(inputList);
-  removeErrorInputsMessages(inputErrorList);
-  removeSubmitButtonClass(submitButton);
-}
-
-// Проверка является закрываемый попап Фотопопапом (в котором нет формы ввода данных)
-function isPhotoPopup(currentPopup) {
-  return currentPopup.classList.contains("popup_type_image");
-}
-
-// Закрытие попапа
-function closePopup(currentPopup) {
-  currentPopup.classList.remove("popup_opened");
-  currentPopup.removeEventListener("mousedown", сlosePopupByMouse);
-  document.removeEventListener("keydown", сlosePopupByEscape);
-  if (!isPhotoPopup(currentPopup)) {
-    clearForm(currentPopup);
-  }
-}
-
-// Открытие попапа и установка слушателя для закрытия по клику на оверлей или нажатию Esc
+// Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
 function openPopup(popupType) {
   // checkOpenedForm(popupType);
   popupType.classList.add("popup_opened");
@@ -168,6 +103,70 @@ function openPhoto(name, link, alt) {
   photoPopupImage.src = link;
   photoPopupImage.alt = alt;
   openPopup(photoPopup);
+}
+
+// Закрытие попапа
+function closePopup(currentPopup) {
+  currentPopup.classList.remove("popup_opened");
+  currentPopup.removeEventListener("mousedown", сlosePopupByMouse);
+  document.removeEventListener("keydown", сlosePopupByEscape);
+  if (!isPhotoPopup(currentPopup)) {
+    clearForm(currentPopup);
+  }
+}
+
+// Проверка является ли закрываемый попап Фотопопапом (в котором нет формы ввода данных)
+function isPhotoPopup(currentPopup) {
+  return currentPopup.classList.contains("popup_type_image");
+}
+
+// Очистка формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
+function clearForm(currentPopup) {
+  const form = currentPopup.querySelector(".popup__form");
+  const inputList = Array.from(form.querySelectorAll(".popup__input"));
+  const inputErrorList = inputList.map((input) => {
+    return form.querySelector(`.${input.id}-error`);
+  });
+  const submitButton = form.querySelector(".popup__save-button");
+  form.reset();
+  removeErrorInputsClass(inputList);
+  removeErrorInputsMessages(inputErrorList);
+  removeSubmitButtonClass(submitButton);
+}
+
+// Удаление стилей некорректных инпутов
+function removeErrorInputsClass(inputList) {
+  inputList.forEach((input) => {
+    input.classList.remove("popup__input_type_error");
+  });
+}
+
+// Удаление сообщений об ошибках ввода
+function removeErrorInputsMessages(inputErrorList) {
+  inputErrorList.forEach((inputError) => {
+    inputError.textContent = "";
+  });
+}
+
+// Удаление стиля неактивной кнопки
+function removeSubmitButtonClass(submitButton) {
+  submitButton.classList.remove("popup__save-button_inactive");
+}
+
+// Закрытие попапа кликом на оверлей
+function сlosePopupByMouse(evt) {
+  if (evt.currentTarget === evt.target) {
+    closePopup(evt.currentTarget);
+  }
+}
+
+// Закрытие попапа нажатием Esc
+function сlosePopupByEscape(evt) {
+  const key = evt.keyCode;
+  const currentPopup = document.querySelector(".popup_opened");
+  if (key === 27) {
+    closePopup(currentPopup);
+  }
 }
 
 // Переключение лайка в карточке
