@@ -62,7 +62,7 @@ function createAndAddCardToGallery(initialCard) {
   addCardToGallery(newCard);
 }
 
-// Добавление новой карточки места из формы ввода
+// Добавление новой карточки из формы ввода
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
   const newPlace = {
@@ -76,7 +76,6 @@ function addCardSubmitHandler(evt) {
 
 // Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
 function openPopup(popupType) {
-  // checkOpenedForm(popupType);
   popupType.classList.add("popup_opened");
   popupType.addEventListener("mousedown", сlosePopupByMouse);
   document.addEventListener("keydown", сlosePopupByEscape);
@@ -137,7 +136,7 @@ function clearForm(currentPopup) {
 // Сброс стилей невалидных инпутов
 function resetInputsClass(inputList) {
   inputList.forEach((input) => {
-    input.classList.remove("popup__input_type_error");
+    input.classList.remove("popup__input_state_invalid");
   });
 }
 
@@ -150,8 +149,8 @@ function resetErrorMessages(inputErrorList) {
 
 // Сброс состояния кнопки отправки формы
 function resetSubmitButton(submitButton) {
-  submitButton.classList.remove("popup__save-button_inactive");
-  submitButton.removeAttribute("disabled");
+  submitButton.setAttribute("disabled", true);
+  submitButton.classList.add("popup__save-button_inactive");
 }
 
 // Закрытие попапа кликом на оверлей
