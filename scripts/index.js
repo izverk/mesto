@@ -75,22 +75,10 @@ function addCardSubmitHandler(evt) {
   imageLinkInput.value = "";
 }
 
-// Первичная проверка валидности полей формы перед её открытием
-// и установка нужных состояний элементам формы
-// function checkOpenedForm(popupType) {
-//   const form = popupType.querySelector(".popup__form");
-//   const inputList = Array.from(form.querySelectorAll(".popup__input"));
-//   toggleButtonState(form, inputList);
-//   inputList.forEach((input) => {
-//     isValid(form, input);
-//   });
-// }
-
 // Закрытие попапа кликом на оверлей
 function сlosePopupByMouse(evt) {
   if (evt.currentTarget === evt.target) {
     closePopup(evt.currentTarget);
-    evt.currentTarget.removeEventListener("mousedown", сlosePopupByMouse);
   }
 }
 
@@ -98,11 +86,57 @@ function сlosePopupByMouse(evt) {
 function сlosePopupByEscape(evt) {
   const key = evt.keyCode;
   const currentPopup = document.querySelector(".popup_opened");
-  console.log(key);
   if (key === 27) {
     closePopup(currentPopup);
   }
+}
+
+// Удаление стилей некорректных инпутов
+function removeErrorInputsClass(inputList) {
+  inputList.forEach((input) => {
+    input.classList.remove("popup__input_type_error");
+  });
+}
+
+// Удаление сообщений об ошибках ввода
+function removeErrorInputsMessages(inputErrorList) {
+  inputErrorList.forEach((inputError) => {
+    inputError.textContent = "";
+  });
+}
+
+// Удаление стиля неактивной кнопки
+function removeSubmitButtonClass(submitButton) {
+  submitButton.classList.remove("popup__save-button_inactive");
+}
+
+// Очистка формы (значений инпутов, сообщений об ошибке, состояния кнопки)
+function clearForm(currentPopup) {
+  const form = currentPopup.querySelector(".popup__form");
+  const inputList = Array.from(form.querySelectorAll(".popup__input"));
+  const inputErrorList = inputList.map((input) => {
+    return form.querySelector(`.${input.id}-error`);
+  });
+  const submitButton = form.querySelector(".popup__save-button");
+  form.reset();
+  removeErrorInputsClass(inputList);
+  removeErrorInputsMessages(inputErrorList);
+  removeSubmitButtonClass(submitButton);
+}
+
+// Проверка является закрываемый попап Фотопопапом (в котором нет формы ввода данных)
+function isPhotoPopup(currentPopup) {
+  return currentPopup.classList.contains("popup_type_image");
+}
+
+// Закрытие попапа
+function closePopup(currentPopup) {
+  currentPopup.classList.remove("popup_opened");
+  currentPopup.removeEventListener("mousedown", сlosePopupByMouse);
   document.removeEventListener("keydown", сlosePopupByEscape);
+  if (!isPhotoPopup(currentPopup)) {
+    clearForm(currentPopup);
+  }
 }
 
 // Открытие попапа и установка слушателя для закрытия по клику на оверлей или нажатию Esc
@@ -111,25 +145,6 @@ function openPopup(popupType) {
   popupType.classList.add("popup_opened");
   popupType.addEventListener("mousedown", сlosePopupByMouse);
   document.addEventListener("keydown", сlosePopupByEscape);
-}
-
-// Очистка элементов формы (значений инпутов и сообщений об ошибке)
-function clearForm(popupType) {
-  const form = popupType.querySelector(".popup__form");
-  const inputList = Array.from(form.querySelectorAll(".popup__input"));
-  const inputErrorList = inputList.map((input) => {
-    return form.querySelector(`.${input.id}-error`);
-  });
-  form.reset();
-  inputErrorList.forEach((inputError) => {
-    inputError.textContent = "";
-  });
-}
-
-// Закрытие попапа
-function closePopup(popupType) {
-  popupType.classList.remove("popup_opened");
-  clearForm(popupType);
 }
 
 // Открытие попапа редактирования профиля пользователя
