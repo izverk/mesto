@@ -77,14 +77,14 @@ function addCardSubmitHandler(evt) {
 
 // Первичная проверка валидности полей формы перед её открытием
 // и установка нужных состояний элементам формы
-function checkOpenedForm(popupType) {
-  const form = popupType.querySelector(".popup__form");
-  const inputList = Array.from(form.querySelectorAll(".popup__input"));
-  toggleButtonState(form, inputList);
-  inputList.forEach((input) => {
-    isValid(form, input);
-  });
-}
+// function checkOpenedForm(popupType) {
+//   const form = popupType.querySelector(".popup__form");
+//   const inputList = Array.from(form.querySelectorAll(".popup__input"));
+//   toggleButtonState(form, inputList);
+//   inputList.forEach((input) => {
+//     isValid(form, input);
+//   });
+// }
 
 // Закрытие попапа кликом на оверлей
 function сlosePopupByMouse(evt) {
@@ -107,7 +107,7 @@ function сlosePopupByEscape(evt) {
 
 // Открытие попапа и установка слушателя для закрытия по клику на оверлей или нажатию Esc
 function openPopup(popupType) {
-  checkOpenedForm(popupType);
+  // checkOpenedForm(popupType);
   popupType.classList.add("popup_opened");
   popupType.addEventListener("mousedown", сlosePopupByMouse);
   document.addEventListener("keydown", сlosePopupByEscape);
