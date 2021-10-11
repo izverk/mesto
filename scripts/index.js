@@ -90,8 +90,8 @@ function openProfilePopup() {
 
 // Открытие попапа добавления карточки
 function opencardPopup() {
-  openPopup(cardPopup);
   clearForm(cardPopup);
+  openPopup(cardPopup);
 }
 
 // Сброс (очистка) формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
