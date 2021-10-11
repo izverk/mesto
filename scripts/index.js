@@ -4,10 +4,12 @@
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
 
+// Массив всех имеющихся попапов
+const popups = Array.from(document.querySelectorAll(".popup"));
+
 // Объекты попапа редактирования профиля пользователя
 const profilePopup = document.querySelector(".popup_type_profile");
 const profilePopupOpenBtn = document.querySelector(".profile__edit-button");
-const profilePopupCloseBtn = profilePopup.querySelector(".popup__close-button");
 const profilePopupForm = profilePopup.querySelector(".popup__form");
 const userNameInput = profilePopup.querySelector(".popup__input_type_name");
 const userJobInput = profilePopup.querySelector(".popup__input_type_job");
@@ -15,7 +17,6 @@ const userJobInput = profilePopup.querySelector(".popup__input_type_job");
 // Объекты попапа добавления новой карточки в галерею
 const cardPopup = document.querySelector(".popup_type_card");
 const cardPopupOpenBtn = document.querySelector(".profile__add-button");
-const cardPopupCloseBtn = cardPopup.querySelector(".popup__close-button");
 const cardPopupForm = cardPopup.querySelector(".popup__form");
 const placeNameInput = cardPopup.querySelector(".popup__input_type_placename");
 const imageLinkInput = cardPopup.querySelector(".popup__input_type_imagelink");
@@ -25,7 +26,6 @@ const gallery = document.querySelector(".gallery__list");
 
 // Объекты попапа просмотра фотографии
 const photoPopup = document.querySelector(".popup_type_image");
-const photoPopupCloseBtn = photoPopup.querySelector(".popup__close-button");
 const photoPopupImage = photoPopup.querySelector(".popup__image");
 const photoPopupCaption = photoPopup.querySelector(".popup__caption");
 
@@ -77,26 +77,36 @@ function addCardSubmitHandler(evt) {
 // Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
 function openPopup(popupType) {
   popupType.classList.add("popup_opened");
-  popupType.addEventListener("mousedown", сlosePopupByMouse);
   document.addEventListener("keydown", сlosePopupByEscape);
 }
 
 // Открытие попапа редактирования профиля пользователя
 function openProfilePopup() {
+  clearForm(profilePopup);
   userNameInput.value = document.querySelector(".profile__name").textContent;
   userJobInput.value = document.querySelector(".profile__job").textContent;
   openPopup(profilePopup);
 }
 
-// Добавление нового профиля пользователя (перезапись полей профиля и закрытие попапа)
-function saveProfileSubmitHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = userNameInput.value;
-  profileJob.textContent = userJobInput.value;
-  closePopup(profilePopup);
+// Открытие попапа добавления карточки
+function opencardPopup() {
+  openPopup(cardPopup);
+  clearForm(cardPopup);
 }
 
-// Открытие фотографии для просмотра
+// Сброс (очистка) формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
+function clearForm(currentPopup) {
+  const form = currentPopup.querySelector(".popup__form");
+  const inputList = Array.from(form.querySelectorAll(".popup__input"));
+  form.reset();
+  inputList.forEach((input) => {
+    const inputError = form.querySelector(`.${input.id}-error`);
+    hideInputError(input, inputError, validationConfig);
+  });
+  toggleButtonState(form, inputList, validationConfig);
+}
+
+// Открытие попапа просмотра фотографии
 function openPhoto(name, link, alt) {
   photoPopupCaption.textContent = name;
   photoPopupImage.src = link;
@@ -104,67 +114,23 @@ function openPhoto(name, link, alt) {
   openPopup(photoPopup);
 }
 
+// Добавление нового профиля пользователя (перезапись полей профиля и закрытие попапа)
+function saveProfileSubmitHandler() {
+  profileName.textContent = userNameInput.value;
+  profileJob.textContent = userJobInput.value;
+  closePopup(profilePopup);
+}
+
 // Закрытие попапа
 function closePopup(currentPopup) {
   currentPopup.classList.remove("popup_opened");
-  currentPopup.removeEventListener("mousedown", сlosePopupByMouse);
   document.removeEventListener("keydown", сlosePopupByEscape);
-  if (!isPhotoPopup(currentPopup)) {
-    clearForm(currentPopup);
-  }
-}
-
-// Проверка является ли закрываемый попап Фотопопапом (в котором нет формы ввода данных)
-function isPhotoPopup(currentPopup) {
-  return currentPopup.classList.contains("popup_type_image");
-}
-
-// Сброс формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
-function clearForm(currentPopup) {
-  const form = currentPopup.querySelector(".popup__form");
-  const inputList = Array.from(form.querySelectorAll(".popup__input"));
-  const inputErrorList = inputList.map((input) => {
-    return form.querySelector(`.${input.id}-error`);
-  });
-  const submitButton = form.querySelector(".popup__save-button");
-  form.reset();
-  resetInputsClass(inputList);
-  resetErrorMessages(inputErrorList);
-  resetSubmitButton(submitButton);
-}
-
-// Сброс стилей невалидных инпутов
-function resetInputsClass(inputList) {
-  inputList.forEach((input) => {
-    input.classList.remove("popup__input_state_invalid");
-  });
-}
-
-// Сброс сообщений об ошибках ввода
-function resetErrorMessages(inputErrorList) {
-  inputErrorList.forEach((inputError) => {
-    inputError.textContent = "";
-  });
-}
-
-// Сброс состояния кнопки отправки формы
-function resetSubmitButton(submitButton) {
-  submitButton.setAttribute("disabled", true);
-  submitButton.classList.add("popup__save-button_inactive");
-}
-
-// Закрытие попапа кликом на оверлей
-function сlosePopupByMouse(evt) {
-  if (evt.currentTarget === evt.target) {
-    closePopup(evt.currentTarget);
-  }
 }
 
 // Закрытие попапа нажатием Esc
 function сlosePopupByEscape(evt) {
-  const key = evt.keyCode;
-  const currentPopup = document.querySelector(".popup_opened");
-  if (key === 27) {
+  if (evt.key === 'Escape') {
+    const currentPopup = document.querySelector(".popup_opened");
     closePopup(currentPopup);
   }
 }
@@ -187,14 +153,20 @@ initialCards.forEach(createAndAddCardToGallery);
 
 // Отслеживаем события попапа редактирования профиля
 profilePopupOpenBtn.addEventListener("click", openProfilePopup);
-profilePopupCloseBtn.addEventListener("click", () => closePopup(profilePopup));
 profilePopupForm.addEventListener("submit", saveProfileSubmitHandler);
 
 // Отслеживаем события попапа добавления новой карточки
-cardPopupOpenBtn.addEventListener("click", () => openPopup(cardPopup));
-cardPopupCloseBtn.addEventListener("click", () => closePopup(cardPopup));
+cardPopupOpenBtn.addEventListener("click", () => opencardPopup(cardPopup));
 cardPopupForm.addEventListener("submit", addCardSubmitHandler);
 
-// Отслеживаем закрытие попапа просмотра фотографии (отслеживание открытия
-// попапа устанавливается в функциях создания карточки)
-photoPopupCloseBtn.addEventListener("click", () => closePopup(photoPopup));
+// Отслеживаем закрытие всех попапов (по клику на оверлей, по клику на крестик)
+popups.forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains("popup__close-button")) {
+      closePopup(popup);
+    }
+  })
+})
