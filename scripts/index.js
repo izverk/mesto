@@ -97,13 +97,13 @@ function opencardPopup() {
 // Сброс (очистка) формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
 function clearForm(currentPopup) {
   const form = currentPopup.querySelector(".popup__form");
-  const inputList = Array.from(form.querySelectorAll(".popup__input"));
+  const inputs = Array.from(form.querySelectorAll(".popup__input"));
   form.reset();
-  inputList.forEach((input) => {
+  inputs.forEach((input) => {
     const inputError = form.querySelector(`.${input.id}-error`);
     hideInputError(input, inputError, validationConfig);
   });
-  toggleButtonState(form, inputList, validationConfig);
+  toggleButtonState(form, inputs, validationConfig);
 }
 
 // Открытие попапа просмотра фотографии
