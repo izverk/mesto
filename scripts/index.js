@@ -110,21 +110,9 @@ import { Card } from './Card.js';
 //   }
 // }
 
-// // Переключение лайка в карточке
-// function likeToggle(evt) {
-//   evt.currentTarget.classList.toggle("card__like_active");
-// }
 
-// // Удаление карточки
-// function deleteCard(evt) {
-//   const deletedCard = evt.currentTarget.closest(".card");
-//   deletedCard.remove();
-// }
 
 // // ----------ДЕЙСТВИЯ----------
-
-// // Заполняем галерею карточками при загрузке страницы
-// initialCards.forEach(createAndAddCardToGallery);
 
 // // Отслеживаем события попапа редактирования профиля
 // profilePopupOpenBtn.addEventListener("click", openProfilePopup);
@@ -145,9 +133,10 @@ import { Card } from './Card.js';
 //     }
 //   })
 // })
+
 // Заполняем галерею карточками при загрузке страницы
-initialCards.forEach(initialCard => {
-  const card = new Card(initialCard);
+initialCards.forEach(item => {
+  const card = new Card(item, '.card-template');
   const cardElement = card.generateCard();
-  document.querySelector(".gallery__list").prepend(cardElement);
+  document.querySelector('.gallery__list').prepend(cardElement);
 });

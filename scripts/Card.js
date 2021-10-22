@@ -1,54 +1,52 @@
-
 class Card {
-  constructor(initialCard) {
-    this._name = initialCard.name;
-    this._link = initialCard.link;
-    this._description = `Фотография места. ${initialCard.name}`;
-    // this._isLiked = false;
+  constructor(data, cardSelector) {
+    this._name = data.name;
+    this._link = data.link;
+    this._description = `Фотография места. ${data.name}`;
+    this._cardSelector = cardSelector;
   }
-  // _like() {
-  //   this._isLiked = !this._isLiked;
-  // }
-  // Получение разметки для новой карточки
+  // Получение шаблона разметки для новой карточки
   _getTemplate() {
-    const cardTemplate = document.querySelector('.card-template').content.cloneNode(true);
+    const cardTemplate = document
+      .querySelector(this._cardSelector)
+      .content.querySelector('.card')
+      .cloneNode(true);
     return cardTemplate;
   }
   // Наполнение данными шаблона разметки карточки
   generateCard() {
     this._element = this._getTemplate();
+    this._setEventListeners();
     this._element.querySelector('.card__name').textContent = this._name;
     this._element.querySelector('.card__photo').setAttribute('src', this._link);
     this._element.querySelector('.card__photo').setAttribute('alt', this._description);
     return this._element;
   }
-
-  // Создание карточки (подготовка разметки, установка слушателей)
-  // function createCard(initialCard) {
-  //   const newCard = cardTemplate.content.cloneNode(true);
-  //   const newCardName = newCard.querySelector(".card__name");
-  //   const newCardPhoto = newCard.querySelector(".card__photo");
-  //   const newCardLike = newCard.querySelector(".card__like");
-  //   const newCardDeleteBtn = newCard.querySelector(".card__delete");
-  //   newCardName.textContent = initialCard.name;
-  //   newCardPhoto.setAttribute("src", initialCard.link);
-  //   newCardPhoto.setAttribute("alt", initialCard.description);
-
-  //   newCardPhoto.addEventListener("click", () => openPhoto(newCardName.textContent, newCardPhoto.src, newCardPhoto.alt));
-  //   newCardLike.addEventListener("click", likeToggle);
-  //   newCardDeleteBtn.addEventListener("click", deleteCard);
-  //   return newCard;
-  // }
-
-  // // Добавление карточки в галерею
-  // function addCardToGallery(card) {
-  //   gallery.prepend(card);
-  // }
-
-  // // Создание и добавление карточки в галерею
-  // function createAndAddCardToGallery(initialCard) {
-  //   const newCard = createCard(initialCard);
-  //   addCardToGallery(newCard);
-  // }
+  // Установка слушателей на элементы карточки
+  _setEventListeners() {
+    this._element.querySelector('.card__like').addEventListener('click', () => {
+      this._likeToggle();
+    });
+    this._element.querySelector('.card__delete').addEventListener('click', () => {
+      this._deleteCard();
+    });
+    this._element
+      .querySelector('.card__photo')
+      .addEventListener('click', () =>
+        openPhoto(newCardName.textContent, newCardPhoto.src, newCardPhoto.alt)
+      );
+  }
+  // Переключение лайка в карточке
+  _likeToggle(evt) {
+    this._element.querySelector('.card__like').classList.toggle('card__like_active');
+  }
+  // Удаление карточки
+  _deleteCard() {
+    this._element.remove();
+  }
 }
+
+// function deleteCard(evt) {
+//
+// }
 export { Card };
