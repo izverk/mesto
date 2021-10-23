@@ -1,9 +1,8 @@
-
 // Исходный массив с данными карточек
 import initialCards from './data.js';
 
 // Функция открытия попапа просмотра фотографии
-import { openPhoto } from './index.js'
+import { openPhoto } from './index.js';
 
 // Класс "Карточка"
 class Card {
@@ -40,9 +39,7 @@ class Card {
     });
     this._element
       .querySelector('.card__photo')
-      .addEventListener('click', () =>
-        openPhoto(this._name, this._link, this._description)
-      );
+      .addEventListener('click', () => openPhoto(this._name, this._link, this._description));
   }
   // Переключение лайка в карточке
   _likeToggle(evt) {
@@ -54,7 +51,8 @@ class Card {
   }
 }
 
-// Заполняем галерею карточками при загрузке страницы
+// Создаем объекты для каждой карточки
+// и заполняем галерею карточками при загрузке страницы
 initialCards.forEach(item => {
   const card = new Card(item, '.card-template');
   const cardElement = card.generateCard();

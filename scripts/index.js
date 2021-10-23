@@ -3,9 +3,6 @@
 // Класс карточек с их свойствами и методами
 import { Card } from './Card.js';
 
-// Отдельные переменные и функции из модуля валидации для очистки формы ввода при открытии
-import { validationConfig, hideInputError, toggleButtonState } from './FormValidator.js';
-
 // Объекты профиля пользователя
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
@@ -26,12 +23,6 @@ const cardPopupOpenBtn = document.querySelector('.profile__add-button');
 const cardPopupForm = cardPopup.querySelector('.popup__form');
 const placeNameInput = cardPopup.querySelector('.popup__input_type_placename');
 const imageLinkInput = cardPopup.querySelector('.popup__input_type_imagelink');
-
-// Галерея (контейнер для добавления карточек)
-const gallery = document.querySelector('.gallery__list');
-
-// Шаблон карточки
-const cardTemplate = document.querySelector('.card-template');
 
 // ----------ФУНКЦИИ----------
 
@@ -89,12 +80,16 @@ function opencardPopup() {
 function clearForm(currentPopup) {
   const form = currentPopup.querySelector('.popup__form');
   const inputs = Array.from(form.querySelectorAll('.popup__input'));
+  const submitButton = currentPopup.querySelector('.popup__save-button');
   form.reset();
   inputs.forEach(input => {
-    const inputError = form.querySelector(`.${input.id}-error`);
-    hideInputError(input, inputError, validationConfig);
+    const error = form.querySelector(`.${input.id}-error`);
+    input.classList.remove('popup__input_state_invalid');
+    error.classList.remove('popup__input-error_active');
+    error.textContent = '';
   });
-  toggleButtonState(form, inputs, validationConfig);
+  submitButton.classList.add('popup__save-button_inactive');
+  submitButton.setAttribute('disabled', true);
 }
 
 // Добавление нового профиля пользователя (перезапись полей профиля и закрытие попапа)
