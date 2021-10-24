@@ -10,11 +10,7 @@
   </head>
   <body class="page">
     <header class="header">
-      <img
-        class="header__logo"
-        src="./images/headerlogo.svg"
-        alt="Логотип сайта"
-      />
+      <img class="header__logo" src="./images/headerlogo.svg" alt="Логотип сайта" />
     </header>
     <main>
       <section class="profile page__section">
@@ -32,10 +28,7 @@
         </div>
         <button type="button" class="profile__add-button buttons"></button>
       </section>
-      <section
-        class="gallery page__section"
-        aria-label="Секция с карточками мест"
-      >
+      <section class="gallery page__section" aria-label="Секция с карточками мест">
         <ul class="gallery__list"></ul>
       </section>
     </main>
@@ -69,11 +62,7 @@
             maxlength="200"
           />
           <span class="popup__input-error userjob-input-error"></span>
-          <button
-            type="submit"
-            class="popup__save-button popup__save-button_inactive"
-            disabled
-          >
+          <button type="submit" class="popup__save-button popup__save-button_inactive" disabled>
             Сохранить
           </button>
         </form>
@@ -104,11 +93,7 @@
             required
           />
           <span class="popup__input-error imagelink-input-error"></span>
-          <button
-            type="submit"
-            class="popup__save-button popup__save-button_inactive"
-            disabled
-          >
+          <button type="submit" class="popup__save-button popup__save-button_inactive" disabled>
             Создать
           </button>
         </form>
@@ -136,8 +121,9 @@
       </li>
     </template>
     <script type="module" src="./scripts/data.js"></script>
+    <script type="module" src="./scripts/index.js"></script>
     <script type="module" src="./scripts/Card.js"></script>
     <script type="module" src="./scripts/FormValidator.js"></script>
-    <script type="module" src="./scripts/index.js"></script>
+    <script type="module" src="./scripts/utils.js"></script>
   </body>
 </html>

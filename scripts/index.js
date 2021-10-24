@@ -4,7 +4,10 @@
 import initialCards from './data.js';
 
 // Класс карточек
-import { Card } from './Card.js';
+import Card from './Card.js';
+
+// Функция открытия попапов
+import { openPopup } from './utils.js';
 
 // Класс валидаторов форм ввода данных и объект его настроек
 import { FormValidator, validationConfig } from './FormValidator.js';
@@ -16,10 +19,10 @@ const profileJob = document.querySelector('.profile__job');
 // Массив всех имеющихся попапов
 const popups = Array.from(document.querySelectorAll('.popup'));
 
-// Объекты попапа просмотра фотографии
-  const photoPopup = document.querySelector('.popup_type_image');
-  const photoPopupImage = photoPopup.querySelector('.popup__image');
-  const photoPopupCaption = photoPopup.querySelector('.popup__caption');
+// // Объекты попапа просмотра фотографии
+// const photoPopup = document.querySelector('.popup_type_image');
+// const photoPopupImage = photoPopup.querySelector('.popup__image');
+// const photoPopupCaption = photoPopup.querySelector('.popup__caption');
 
 // Объекты попапа редактирования профиля пользователя
 const profilePopup = document.querySelector('.popup_type_profile');
@@ -65,19 +68,19 @@ function createAndAddCardToGallery(newPlace) {
   cardsContainer.prepend(cardElement);
 }
 
-// Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
-function openPopup(popupType) {
-  popupType.classList.add('popup_opened');
-  document.addEventListener('keydown', сlosePopupByEscape);
-}
+// // Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
+// function openPopup(popupType) {
+//   popupType.classList.add('popup_opened');
+//   document.addEventListener('keydown', сlosePopupByEscape);
+// }
 
-// Открытие попапа просмотра фотографии
-function openPhoto(name, link, alt) {
-  photoPopupCaption.textContent = name;
-  photoPopupImage.src = link;
-  photoPopupImage.alt = alt;
-  openPopup(photoPopup);
-}
+// // Открытие попапа просмотра фотографии
+// function openPhoto(name, link, alt) {
+//   photoPopupCaption.textContent = name;
+//   photoPopupImage.src = link;
+//   photoPopupImage.alt = alt;
+//   openPopup(photoPopup);
+// }
 
 // Открытие попапа редактирования профиля пользователя
 function openProfilePopup() {
@@ -164,4 +167,5 @@ popups.forEach(popup => {
   });
 });
 
-export { openPhoto };
+export { сlosePopupByEscape };
+// export { openPhoto };
