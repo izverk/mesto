@@ -1,7 +1,13 @@
 // ----------ПЕРЕМЕННЫЕ----------
 
-// Класс карточек с их свойствами и методами
+// Исходный массив с данными карточек
+import initialCards from './data.js';
+
+// Класс карточек
 import { Card } from './Card.js';
+
+// Класс валидаторов форм ввода данных и объект его настроек
+import { FormValidator, validationConfig } from './FormValidator.js';
 
 // Объекты профиля пользователя
 const profileName = document.querySelector('.profile__name');
@@ -9,6 +15,11 @@ const profileJob = document.querySelector('.profile__job');
 
 // Массив всех имеющихся попапов
 const popups = Array.from(document.querySelectorAll('.popup'));
+
+// Объекты попапа просмотра фотографии
+  const photoPopup = document.querySelector('.popup_type_image');
+  const photoPopupImage = photoPopup.querySelector('.popup__image');
+  const photoPopupCaption = photoPopup.querySelector('.popup__caption');
 
 // Объекты попапа редактирования профиля пользователя
 const profilePopup = document.querySelector('.popup_type_profile');
@@ -24,6 +35,9 @@ const cardPopupForm = cardPopup.querySelector('.popup__form');
 const placeNameInput = cardPopup.querySelector('.popup__input_type_placename');
 const imageLinkInput = cardPopup.querySelector('.popup__input_type_imagelink');
 
+// Контейнер для добавления новых карточек
+const cardsContainer = document.querySelector('.gallery__list');
+
 // ----------ФУНКЦИИ----------
 
 // Добавление новой карточки из формы ввода
@@ -34,15 +48,21 @@ function addCardSubmitHandler(evt) {
     link: imageLinkInput.value,
     description: `Фотография места. ${placeNameInput.value}`,
   };
-  createAndAddCardToGallery(newPlace)
+  createAndAddCardToGallery(newPlace);
   closePopup(cardPopup);
+}
+
+// Создание карточки
+function createCard(newPlace) {
+  const card = new Card(newPlace, '.card-template');
+  const cardElement = card.generateCard();
+  return cardElement;
 }
 
 // Создание и добавление карточки на страницу
 function createAndAddCardToGallery(newPlace) {
-  const card = new Card(newPlace, '.card-template');
-  const cardElement = card.generateCard();
-  document.querySelector('.gallery__list').prepend(cardElement);
+  const cardElement = createCard(newPlace);
+  cardsContainer.prepend(cardElement);
 }
 
 // Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
@@ -53,9 +73,6 @@ function openPopup(popupType) {
 
 // Открытие попапа просмотра фотографии
 function openPhoto(name, link, alt) {
-  const photoPopup = document.querySelector('.popup_type_image');
-  const photoPopupImage = photoPopup.querySelector('.popup__image');
-  const photoPopupCaption = photoPopup.querySelector('.popup__caption');
   photoPopupCaption.textContent = name;
   photoPopupImage.src = link;
   photoPopupImage.alt = alt;
@@ -114,6 +131,18 @@ function сlosePopupByEscape(evt) {
 }
 
 // ----------ДЕЙСТВИЯ----------
+
+// Заполняем галерею карточками при загрузке страницы
+initialCards.forEach(item => {
+  createAndAddCardToGallery(item);
+});
+
+// Создаем для каждой формы ввода свой объект валидатора при загрузке страницы
+const forms = Array.from(document.querySelectorAll('.popup__form'));
+forms.forEach(formElement => {
+  const formValidator = new FormValidator(validationConfig, formElement);
+  formValidator.enableValidation();
+});
 
 // Отслеживаем события попапа редактирования профиля
 profilePopupOpenBtn.addEventListener('click', openProfilePopup);

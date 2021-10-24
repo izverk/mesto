@@ -69,9 +69,4 @@ class FormValidator {
   }
 }
 
-// Создаем для каждой формы ввода свой объект валидатора при загрузке страницы
-const forms = Array.from(document.querySelectorAll('.popup__form'));
-forms.forEach(formElement => {
-  const formValidator = new FormValidator(validationConfig, formElement);
-  formValidator.enableValidation();
-});
+export { FormValidator, validationConfig };
