@@ -85,7 +85,6 @@ function openPhoto(name, link, alt) {
 
 // Открытие попапа редактирования профиля пользователя
 function openProfilePopup() {
-  // clearForm(profilePopup);
   userNameInput.value = profileName.textContent;
   userJobInput.value = profileJob.textContent;
   profileFormValidator.resetValidation();
