@@ -1,37 +1,38 @@
-// ----------ПЕРЕМЕННЫЕ----------
+// ----------ИМПОРТЫ----------
 
 // Исходный массив с данными карточек
 import initialCards from './data.js';
-
 // Класс карточек
 import Card from './Card.js';
-
-// Функция открытия попапов
-import { openPopup } from './utils.js';
-
 // Класс валидаторов форм ввода данных и объект его настроек
 import { FormValidator, validationConfig } from './FormValidator.js';
 
-// Объекты профиля пользователя
+// ----------ЭКСПОРТЫ----------
+
+export { openPhoto };
+
+// ----------ВЫБОР ЭЛЕМЕНТОВ DOM----------
+
+// Элементы профиля пользователя
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
 // Массив всех имеющихся попапов
 const popups = Array.from(document.querySelectorAll('.popup'));
 
-// // Объекты попапа просмотра фотографии
-// const photoPopup = document.querySelector('.popup_type_image');
-// const photoPopupImage = photoPopup.querySelector('.popup__image');
-// const photoPopupCaption = photoPopup.querySelector('.popup__caption');
+// Элементы попапа просмотра фотографии
+const photoPopup = document.querySelector('.popup_type_image');
+const photoPopupImage = photoPopup.querySelector('.popup__image');
+const photoPopupCaption = photoPopup.querySelector('.popup__caption');
 
-// Объекты попапа редактирования профиля пользователя
+// Элементы попапа редактирования профиля пользователя
 const profilePopup = document.querySelector('.popup_type_profile');
 const profilePopupOpenBtn = document.querySelector('.profile__edit-button');
 const profilePopupForm = profilePopup.querySelector('.popup__form');
 const userNameInput = profilePopup.querySelector('.popup__input_type_name');
 const userJobInput = profilePopup.querySelector('.popup__input_type_job');
 
-// Объекты попапа добавления новой карточки в галерею
+// Элементы попапа добавления новой карточки в галерею
 const cardPopup = document.querySelector('.popup_type_card');
 const cardPopupOpenBtn = document.querySelector('.profile__add-button');
 const cardPopupForm = cardPopup.querySelector('.popup__form');
@@ -68,48 +69,34 @@ function createAndAddCardToGallery(newPlace) {
   cardsContainer.prepend(cardElement);
 }
 
-// // Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
-// function openPopup(popupType) {
-//   popupType.classList.add('popup_opened');
-//   document.addEventListener('keydown', сlosePopupByEscape);
-// }
+// Открытие попапа и установка слушателей для закрытия по клику на оверлей или нажатию Esc
+function openPopup(popupType) {
+  popupType.classList.add('popup_opened');
+  document.addEventListener('keydown', сlosePopupByEscape);
+}
 
-// // Открытие попапа просмотра фотографии
-// function openPhoto(name, link, alt) {
-//   photoPopupCaption.textContent = name;
-//   photoPopupImage.src = link;
-//   photoPopupImage.alt = alt;
-//   openPopup(photoPopup);
-// }
+// Открытие попапа просмотра фотографии
+function openPhoto(name, link, alt) {
+  photoPopupCaption.textContent = name;
+  photoPopupImage.src = link;
+  photoPopupImage.alt = alt;
+  openPopup(photoPopup);
+}
 
 // Открытие попапа редактирования профиля пользователя
 function openProfilePopup() {
-  clearForm(profilePopup);
-  userNameInput.value = document.querySelector('.profile__name').textContent;
-  userJobInput.value = document.querySelector('.profile__job').textContent;
+  // clearForm(profilePopup);
+  userNameInput.value = profileName.textContent;
+  userJobInput.value = profileJob.textContent;
+  profileFormValidator.resetValidation();
   openPopup(profilePopup);
 }
 
 // Открытие попапа добавления карточки
 function opencardPopup() {
-  clearForm(cardPopup);
+  cardPopupForm.reset();
+  cardFormValidator.resetValidation();
   openPopup(cardPopup);
-}
-
-// Сброс (очистка) формы ввода (значений инпутов, сообщений об ошибке, состояния кнопки)
-function clearForm(currentPopup) {
-  const form = currentPopup.querySelector('.popup__form');
-  const inputs = Array.from(form.querySelectorAll('.popup__input'));
-  const submitButton = currentPopup.querySelector('.popup__save-button');
-  form.reset();
-  inputs.forEach(input => {
-    const error = form.querySelector(`.${input.id}-error`);
-    input.classList.remove('popup__input_state_invalid');
-    error.classList.remove('popup__input-error_active');
-    error.textContent = '';
-  });
-  submitButton.classList.add('popup__save-button_inactive');
-  submitButton.setAttribute('disabled', true);
 }
 
 // Добавление нового профиля пользователя (перезапись полей профиля и закрытие попапа)
@@ -135,24 +122,23 @@ function сlosePopupByEscape(evt) {
 
 // ----------ДЕЙСТВИЯ----------
 
-// Заполняем галерею карточками при загрузке страницы
+// Создаем объекты карточек и заполняем галерею карточками при загрузке страницы
 initialCards.forEach(item => {
   createAndAddCardToGallery(item);
 });
 
-// Создаем для каждой формы ввода свой объект валидатора при загрузке страницы
-const forms = Array.from(document.querySelectorAll('.popup__form'));
-forms.forEach(formElement => {
-  const formValidator = new FormValidator(validationConfig, formElement);
-  formValidator.enableValidation();
-});
+// Для каждой формы ввода создаем свой объект валидатора и запускаем валидацию
+const profileFormValidator = new FormValidator(validationConfig, profilePopupForm);
+profileFormValidator.enableValidation();
+const cardFormValidator = new FormValidator(validationConfig, cardPopupForm);
+cardFormValidator.enableValidation();
 
 // Отслеживаем события попапа редактирования профиля
 profilePopupOpenBtn.addEventListener('click', openProfilePopup);
 profilePopupForm.addEventListener('submit', saveProfileSubmitHandler);
 
 // Отслеживаем события попапа добавления новой карточки
-cardPopupOpenBtn.addEventListener('click', () => opencardPopup(cardPopup));
+cardPopupOpenBtn.addEventListener('click', opencardPopup);
 cardPopupForm.addEventListener('submit', addCardSubmitHandler);
 
 // Отслеживаем закрытие всех попапов (по клику на оверлей, по клику на крестик)
@@ -166,6 +152,3 @@ popups.forEach(popup => {
     }
   });
 });
-
-export { сlosePopupByEscape };
-// export { openPhoto };

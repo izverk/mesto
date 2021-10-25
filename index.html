@@ -39,7 +39,7 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <button type="button" class="popup__close-button buttons"></button>
-        <form class="popup__form" name="profile" novalidate>
+        <form class="popup__form popup__form_type_profile" name="profile" novalidate>
           <input
             type="text"
             name="username"
@@ -72,7 +72,7 @@
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
         <button type="button" class="popup__close-button buttons"></button>
-        <form class="popup__form" name="card" novalidate>
+        <form class="popup__form popup__form_type_card" name="card" novalidate>
           <input
             type="text"
             name="placename"
@@ -124,6 +124,5 @@
     <script type="module" src="./scripts/index.js"></script>
     <script type="module" src="./scripts/Card.js"></script>
     <script type="module" src="./scripts/FormValidator.js"></script>
-    <script type="module" src="./scripts/utils.js"></script>
   </body>
 </html>
