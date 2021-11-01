@@ -7,6 +7,7 @@ export default class Card {
     this._link = data.link;
     this._description = `Фотография места. ${data.name}`;
     this._cardSelector = cardSelector;
+    this._openPhoto = openPhoto;
   }
   // Получение шаблона разметки для новой карточки
   _getTemplate() {
@@ -38,7 +39,7 @@ export default class Card {
       this._deleteCard();
     });
     this._cardPhotoElement.addEventListener('click', () => {
-      openPhoto(this._name, this._link, this._description);
+      this._openPhoto(this._name, this._link, this._description);
     });
   }
   // Переключение лайка в карточке
