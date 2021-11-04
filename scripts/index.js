@@ -9,7 +9,7 @@ import { FormValidator, validationConfig } from './FormValidator.js';
 
 // ----------ЭКСПОРТЫ----------
 
-export { openPhoto };
+// export { handleCardClick };
 
 // ----------ВЫБОР ЭЛЕМЕНТОВ DOM----------
 
@@ -57,8 +57,8 @@ function addCardSubmitHandler(evt) {
 }
 
 // Создание карточки
-function createCard(newPlace) {
-  const card = new Card(newPlace, '.card-template');
+function createCard(data) {
+  const card = new Card({ data, handleCardClick }, '.card-template');
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -76,7 +76,7 @@ function openPopup(popupType) {
 }
 
 // Открытие попапа просмотра фотографии
-function openPhoto(name, link, alt) {
+function handleCardClick(name, link, alt) {
   photoPopupCaption.textContent = name;
   photoPopupImage.src = link;
   photoPopupImage.alt = alt;
