@@ -1,5 +1,3 @@
-// import { openPhoto } from './index.js';
-
 // Класс карточек
 export default class Card {
   constructor({ data, handleCardClick }, cardSelector) {

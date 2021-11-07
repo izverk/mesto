@@ -1,18 +1,18 @@
 // ----------ИМПОРТЫ----------
 
 // Исходный массив с данными карточек
-import initialCards from './data.js';
+import initialCards from '../utils/constants.js';
 // Класс карточек
-import Card from './Card.js';
+import Card from '../components/Card.js';
 // Класс валидаторов форм ввода данных и объект его настроек
-import { FormValidator, validationConfig } from './FormValidator.js';
+import { FormValidator, validationConfig } from '../components/FormValidator.js';
 // Класс отрисовщиков элементов на странице
-import Section from './Section.js';
+import Section from '../components/Section.js';
 // Класс попапов
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 // Класс данных о пользователе
-import UserInfo from './UserInfo.js';
+import UserInfo from '../components/UserInfo.js';
 
 // ----------ВЫБОР ЭЛЕМЕНТОВ DOM----------
 
