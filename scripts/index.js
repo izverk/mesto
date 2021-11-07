@@ -28,10 +28,11 @@ const cardFormElement = document.querySelector('.popup_type_card').querySelector
 
 // ----------ДЕЙСТВИЯ----------
 
-// Создаем объект класса отрисовщика карточек
+// Создаем экземпляр класса отрисовщика для первоначального заполнения галереи карточками
 const cardSection = new Section(
   {
     initialCards,
+    // передаем метод отрисовки отдельной карточки
     renderer: data => {
       const card = new Card(
         {
@@ -53,39 +54,18 @@ const cardSection = new Section(
 // Заполняем галерею карточками при загрузке страницы
 cardSection.renderItems();
 
-// Создаем объект класса для попапа создания карточки
+// Создаем экземпляр класса для попапа создания карточки
 const popupWithCardForm = new PopupWithForm({
   popupSelector: '.popup_type_card',
-  formSubmitHandler: initialCards => {
-    const cardSection = new Section(
-      {
-        initialCards,
-        renderer: data => {
-          const card = new Card(
-            {
-              data,
-              handleCardClick: (photoCaption, photoLink, photoDescription) => {
-                popupWithImage.setEventListeners();
-                popupWithImage.open(photoCaption, photoLink, photoDescription);
-              },
-            },
-            '.card-template'
-          );
-          const cardElement = card.generateCard();
-          return cardElement;
-        },
-      },
-      '.gallery__list'
-      );
-      cardSection.renderItems();
-      popupWithCardForm.close();
-    },
+  // передаем обработчик события отправки формы создания карточки
+  formSubmitHandler: inputValues => {
+    cardSection._items = inputValues;
+    cardSection.renderItems();
+    popupWithCardForm.close();
+  },
 });
 
-// Создаем объект класса для попапа просмотра фотографии
-const popupWithImage = new PopupWithImage('.popup_type_image');
-
-// Создаем объект класса для попапа профиля пользователя
+// Создаем экземпляр класса для попапа профиля пользователя
 const popupWithProfileForm = new PopupWithForm({
   popupSelector: '.popup_type_profile',
   formSubmitHandler: inputValues => {
@@ -94,10 +74,13 @@ const popupWithProfileForm = new PopupWithForm({
   },
 });
 
-// Создаём объект класса с данными о пользователе
+// Создаем экземпляр класса для попапа просмотра фотографии
+const popupWithImage = new PopupWithImage('.popup_type_image');
+
+// Создаём экземпляр класса с данными о пользователе
 let userInfo = new UserInfo('.profile__name', '.profile__job');
 
-// Для каждой формы ввода создаем свой объект класса валидаторов и запускаем валидацию
+// Для каждой формы ввода создаем свой экземпляр класса валидаторов и запускаем валидацию
 const profileFormValidator = new FormValidator(validationConfig, profileFormElement);
 profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(validationConfig, cardFormElement);
