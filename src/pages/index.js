@@ -1,5 +1,7 @@
 // ----------ИМПОРТЫ----------
 
+// Файл стилей
+import './index.css';
 // Исходный массив с данными карточек
 import initialCards from '../utils/constants.js';
 // Класс карточек
