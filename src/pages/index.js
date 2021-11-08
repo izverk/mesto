@@ -80,7 +80,7 @@ const popupWithProfileForm = new PopupWithForm({
 const popupWithImage = new PopupWithImage('.popup_type_image');
 
 // Создаём экземпляр класса с данными о пользователе
-let userInfo = new UserInfo('.profile__name', '.profile__job');
+const userInfo = new UserInfo('.profile__name', '.profile__job');
 
 // Для каждой формы ввода создаем свой экземпляр класса валидаторов и запускаем валидацию
 const profileFormValidator = new FormValidator(validationConfig, profileFormElement);
