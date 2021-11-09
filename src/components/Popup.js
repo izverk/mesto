@@ -6,6 +6,7 @@ export default class Popup {
     this._bindedHandleMouseClose = this._handleMouseClose.bind(this);
   }
   open() {
+    this.setEventListeners();
     this._popupElement.classList.add('popup_opened');
   }
   close() {
