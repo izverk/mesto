@@ -2,7 +2,7 @@
 
 // Файл стилей
 import './index.css';
-// Исходный массив с данными карточек
+// Константы
 import {
   initialCards,
   validationConfig,
@@ -14,6 +14,8 @@ import {
   userNameElementSelector,
   userDescriptionSelector,
 } from '../utils/constants.js';
+// Класс взаимодействия с сервором
+import Api from '../components/Api.js';
 // Класс карточек
 import Card from '../components/Card.js';
 // Класс валидаторов форм ввода данных и объект его настроек
@@ -40,7 +42,28 @@ const cardFormElement = document.querySelector('.popup_type_card').querySelector
 
 // ----------ДЕЙСТВИЯ----------
 
-// Создаем экземпляр класса отрисовщика для первоначального заполнения галереи карточками
+// // Создаем экземпляр класса Api для взаимодействия с сервером
+// export const api = new Api({
+//   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-30',
+//   headers: {
+//     authorization: 'da681d0f-779e-4fd5-82ae-9312d4a0fb2c',
+//     'Content-Type': 'application/json',
+//   },
+// });
+// // Получаем от сервера массив карточек для первоначального заполнения галереи
+// let initialCards;
+// api
+//   .getInitialCards()
+//   .then(data => {
+//     console.log(data);
+//     initialCards = data;
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
+// console.log(initialCards);
+
+// Создаем экземпляр класса отрисовщика для галереи карточек
 const cardSection = new Section(
   {
     initialCards,
@@ -69,7 +92,7 @@ cardSection.renderItems();
 // Создаем экземпляр класса для попапа создания карточки
 const popupWithCardForm = new PopupWithForm({
   popupSelector: cardPopupSelector,
-  // передаем обработчик события отправки формы создания карточки
+  // передаем колбэк - обработчик события отправки формы создания карточки
   formSubmitHandler: inputValues => {
     cardSection._items = [inputValues];
     cardSection.renderItems();
