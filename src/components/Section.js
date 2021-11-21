@@ -1,11 +1,11 @@
 export default class Section {
   constructor({ initialCards: items, renderer }, containerSelector) {
-    this._items = items;
+    this.items = items;
     this._renderer = renderer;
     this._containerSelector = containerSelector;
   }
   renderItems() {
-    this._items.forEach(item => {
+    this.items.forEach(item => {
       const element = this._renderer(item);
       this.addItem(element);
     });
