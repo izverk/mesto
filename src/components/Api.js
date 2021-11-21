@@ -3,6 +3,7 @@ export default class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
+  // Получение начального массива карточек
   getInitialCards() {
     return fetch(`${this._baseUrl}cards`, {
       method: 'GET',
@@ -15,6 +16,7 @@ export default class Api {
       }
     });
   }
+  // Получение профиля пользователя
   getUserInfo() {
     return fetch(`${this._baseUrl}users/me`, {
       method: 'GET',
@@ -27,6 +29,7 @@ export default class Api {
       }
     });
   }
+  // Сохранение карточки на сервере
   postCard({ name, link }) {
     return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
@@ -34,6 +37,23 @@ export default class Api {
       body: JSON.stringify({
         name: name,
         link: link,
+      }),
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }
+    });
+  }
+  // Сохранение профиля пользователя на сервере
+  saveUser({ userName, userDescription }) {
+    return fetch(`${this._baseUrl}users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: userName,
+        about: userDescription,
       }),
     }).then(res => {
       if (res.ok) {

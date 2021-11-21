@@ -51,7 +51,7 @@ export const api = new Api({
   },
 });
 
-// ------ Загружаем данные пользователя, создаем экз. пользователя, отображаем на странице ------
+// ========= Загружаем данные пользователя, создаем экз. пользователя, отображаем на странице =========
 api
   .getUserInfo()
   .then(userData => {
@@ -61,22 +61,47 @@ api
       userAvatarSelector,
       userData
     );
-    // выбираем только необходимые для отображения данные
+    // выбираем только необходимые данные и отображаем
     const { name: userName, about: userDescription, avatar: avatarUrl } = userData;
     userInfo.setAvatar(avatarUrl);
     userInfo.setUserInfo({ userName, userDescription });
+
+    // --------------- Создаем экземпляр класса попапа профиля пользователя ---------------------
+    const popupWithProfileForm = new PopupWithForm({
+      popupSelector: profilePopupSelector,
+      // передаем обработчик события отправки формы
+      formSubmitHandler: inputValues => {
+        api
+          .saveUser(inputValues)
+          .then(newUserData => {
+            userInfo.updateUserData(newUserData);
+            userInfo.setUserInfo(inputValues);
+            popupWithProfileForm.close();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      },
+    });
+    // -------------------- Ставим слушатель на открытие попапа профиля -------------------------
+    profileOpenBtn.addEventListener('click', () => {
+      profileFormValidator.resetValidation();
+      popupWithProfileForm.setInputValues(userInfo.getUserInfo()); // передаем поля профиля в инпуты формы
+      popupWithProfileForm.open();
+    });
   })
   .catch(err => {
     console.log(err);
   });
 
-// -------- Загружаем начальный массив карточек, создаём экз. карточек и отрисовываем их --------
+// ======== Загружаем начальный массив карточек, создаём экз. карточек и отрисовываем их =========
 api
   .getInitialCards()
   .then(initialCards => {
-    // Обрезаем массив, оставляя первые 6 карточек
+    // обрезаем массив, оставляя первые 6 карточек
     initialCards = initialCards.slice(0, 6);
-    // Создаем экземпляр класса отрисовщика для галереи карточек
+
+    // ---------------- Создаем экземпляр класса отрисовщика для галереи карточек ----------------
     const cardSection = new Section(
       {
         initialCards,
@@ -98,19 +123,19 @@ api
       },
       cardsContainerSelector
     );
-    // Заполняем галерею карточками
+    // ------------------------------- Заполняем галерею карточками -----------------------------
     cardSection.renderItems();
 
-    // ----------------------- Создаем экземпляр класса попапа карточки -----------------------
+    // ------------------------ Создаем экземпляр класса попапа карточки -------------------------
     const popupWithCardForm = new PopupWithForm({
       popupSelector: cardPopupSelector,
-      // передаем колбэк - обработчик события отправки формы создания карточки
+      // передаем обработчик события отправки формы
       formSubmitHandler: inputValues => {
         api
           .postCard(inputValues)
           .then(cardData => {
             console.log('данные карточки от сервера:', cardData);
-            // выбираем только необходимые для отображения данные
+            // выбираем только необходимые данные и отображаем
             cardSection.items = [{ name: cardData.name, link: cardData.link }];
             cardSection.renderItems();
             popupWithCardForm.close();
@@ -120,26 +145,15 @@ api
           });
       },
     });
-
     // ------------ Ставим слушатель на открытие попапа добавления новой карточки --------------
     cardPopupOpenBtn.addEventListener('click', () => {
       cardFormValidator.resetValidation();
       popupWithCardForm.open();
     });
   })
-
   .catch(err => {
     console.log(err);
   });
-
-// Создаем экземпляр класса для попапа профиля пользователя
-const popupWithProfileForm = new PopupWithForm({
-  popupSelector: profilePopupSelector,
-  formSubmitHandler: inputValues => {
-    userInfo.setUserInfo(inputValues);
-    popupWithProfileForm.close();
-  },
-});
 
 // Создаем экземпляр класса для попапа просмотра фотографии
 const popupWithImage = new PopupWithImage(pfotoPopupSelector);
@@ -149,10 +163,3 @@ const profileFormValidator = new FormValidator(validationConfig, profileFormElem
 profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(validationConfig, cardFormElement);
 cardFormValidator.enableValidation();
-
-// Отслеживаем открытие попапа редактирования профиля
-profileOpenBtn.addEventListener('click', () => {
-  profileFormValidator.resetValidation();
-  popupWithProfileForm.setInputValues(userInfo.getUserInfo()); // передаем поля профиля в инпуты формы
-  popupWithProfileForm.open();
-});
