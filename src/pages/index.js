@@ -110,10 +110,33 @@ api
           const card = new Card(
             {
               data,
+              // передаем обработчик клика карточки (открытие фото)
               handleCardClick: (photoCaption, photoLink, photoDescription) => {
                 popupWithImage.setEventListeners();
                 popupWithImage.open(photoCaption, photoLink, photoDescription);
               },
+              handleLikeClick: () => {
+                if (this._isLiked) {
+                  api
+                    .saveLike(this._cardData.id)
+                    .then(res => {
+                      this._cardData = JSON.parse(JSON.stringify(res))
+                      this._isLiked = !this._isLiked;
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                } else {
+                  deleteLike(this._cardData.id)
+                    .then(res => {
+                      this._isLiked = !this._isLiked;
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                }
+              },
+              handleDelButtonClick: 'qwe',
             },
             cardTemplateSelector
           );

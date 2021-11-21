@@ -63,4 +63,30 @@ export default class Api {
       }
     });
   }
+  // Сохранение лайка карточки на сервере
+  saveLike(cardId) {
+    return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers,
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }
+    });
+  }
+  // Удаление лайка карточки с сервера
+  saveLike(cardId) {
+    return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }
+    });
+  }
 }
