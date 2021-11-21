@@ -54,3 +54,4 @@ export const pfotoPopupSelector = '.popup_type_image';
 // Селекторы элементов профиля пользователя
 export const userNameSelector = '.profile__name';
 export const userDescriptionSelector = '.profile__job';
+export const userAvatarSelector = '.profile__avatar';

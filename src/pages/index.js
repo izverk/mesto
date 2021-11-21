@@ -13,6 +13,7 @@ import {
   pfotoPopupSelector,
   userNameSelector,
   userDescriptionSelector,
+  userAvatarSelector,
 } from '../utils/constants.js';
 // Класс взаимодействия с сервором
 import Api from '../components/Api.js';
@@ -55,9 +56,15 @@ export const api = new Api({
 api
   .getUserInfo()
   .then(userData => {
-    console.log(userData);
-    const userInfo = new UserInfo(userNameSelector, userDescriptionSelector, userData);
-    const { name: userName, about: userDescription } = userData; // берем имя и опис. поль-ля для отобр.
+    const userInfo = new UserInfo(
+      userNameSelector,
+      userDescriptionSelector,
+      userAvatarSelector,
+      userData
+    );
+    // берем данные для отображения
+    const { name: userName, about: userDescription, avatar: avatarUrl } = userData;
+    userInfo.setAvatar( avatarUrl );
     userInfo.setUserInfo({ userName, userDescription });
   })
   .catch(err => {
