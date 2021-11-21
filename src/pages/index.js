@@ -4,7 +4,6 @@
 import './index.css';
 // Константы
 import {
-  initialCards,
   validationConfig,
   cardsContainerSelector,
   cardTemplateSelector,
@@ -43,7 +42,7 @@ const cardFormElement = document.querySelector('.popup_type_card').querySelector
 
 // ================================== ОСНОВНОЙ АЛГОРИТМ ========================================
 
-// ------- Создаем экземпляр класса Api для взаимодействия с сервером -------
+// ---------------- Создаем экземпляр класса Api для взаимодействия с сервером ----------------
 export const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-30/',
   headers: {
@@ -52,7 +51,7 @@ export const api = new Api({
   },
 });
 
-// ------- Загружаем данные пользователя, создаем экз. пользователя, отображаем на странице -------
+// ------ Загружаем данные пользователя, создаем экз. пользователя, отображаем на странице ------
 api
   .getUserInfo()
   .then(userData => {
@@ -62,17 +61,16 @@ api
       userAvatarSelector,
       userData
     );
-    // берем данные для отображения
+    // выбираем только необходимые для отображения данные
     const { name: userName, about: userDescription, avatar: avatarUrl } = userData;
-    userInfo.setAvatar( avatarUrl );
+    userInfo.setAvatar(avatarUrl);
     userInfo.setUserInfo({ userName, userDescription });
   })
   .catch(err => {
     console.log(err);
   });
 
-// ------- Загружаем начальный массив карточек, создаём экз. карточек и отрисовываем их -------
-//
+// -------- Загружаем начальный массив карточек, создаём экз. карточек и отрисовываем их --------
 api
   .getInitialCards()
   .then(initialCards => {
@@ -102,21 +100,37 @@ api
     );
     // Заполняем галерею карточками
     cardSection.renderItems();
+
+    // ---------------- Создаем экземпляр класса для попапа создания карточки -----------------
+    const popupWithCardForm = new PopupWithForm({
+      popupSelector: cardPopupSelector,
+      // передаем колбэк - обработчик события отправки формы создания карточки
+      formSubmitHandler: inputValues => {
+        api
+          .postCard(inputValues)
+          .then(cardData => {
+            console.log('данные карточки от сервера:', cardData);
+            // выбираем только необходимые для отображения данные
+            cardSection.items = [{ name: cardData.name, link: cardData.link }];
+            cardSection.renderItems();
+            popupWithCardForm.close();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      },
+    });
+
+    // ------------ Ставим слушатель на открытие попапа добавления новой карточки --------------
+    cardPopupOpenBtn.addEventListener('click', () => {
+      cardFormValidator.resetValidation();
+      popupWithCardForm.open();
+    });
   })
+
   .catch(err => {
     console.log(err);
   });
-
-// Создаем экземпляр класса для попапа создания карточки
-const popupWithCardForm = new PopupWithForm({
-  popupSelector: cardPopupSelector,
-  // передаем колбэк - обработчик события отправки формы создания карточки
-  formSubmitHandler: inputValues => {
-    cardSection.items = [inputValues];
-    cardSection.renderItems();
-    popupWithCardForm.close();
-  },
-});
 
 // Создаем экземпляр класса для попапа профиля пользователя
 const popupWithProfileForm = new PopupWithForm({
@@ -141,10 +155,4 @@ profileOpenBtn.addEventListener('click', () => {
   profileFormValidator.resetValidation();
   popupWithProfileForm.setInputValues(userInfo.getUserInfo()); // передаем поля профиля в инпуты формы
   popupWithProfileForm.open();
-});
-
-// Отслеживаем открытие попапа добавления новой карточки
-cardPopupOpenBtn.addEventListener('click', () => {
-  cardFormValidator.resetValidation();
-  popupWithCardForm.open();
 });

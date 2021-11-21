@@ -1,6 +1,7 @@
 // Класс карточек
 export default class Card {
   constructor({ data, handleCardClick }, cardSelector) {
+    this._data = data;
     this._name = data.name;
     this._link = data.link;
     this._description = `Фотография места. ${data.name}`;
