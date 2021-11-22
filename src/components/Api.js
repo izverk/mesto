@@ -77,7 +77,7 @@ export default class Api {
     });
   }
   // Удаление лайка карточки с сервера
-  saveLike(cardId) {
+  deleteLike(cardId) {
     return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,

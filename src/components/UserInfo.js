@@ -7,6 +7,7 @@ export default class UserInfo {
     this._userDescriptionElement = document.querySelector(userDescriptionSelector);
     this._userAvatarElement = document.querySelector(userAvatarSelector);
     this._userData = userData;
+    this._userId = this._userData._id
   }
   getUserInfo() {
     return {
