@@ -42,7 +42,49 @@ const cardFormElement = document.querySelector('.popup_type_card').querySelector
 
 // ================================== ОСНОВНОЙ АЛГОРИТМ ========================================
 
-// ---------------- Создаем экземпляр класса Api для взаимодействия с сервером ----------------
+// -------------Функция создания экземпляра карточки------------------
+function createCardExemp(cardData, userId) {
+  const card = new Card(
+    {
+      data: { cardData, userId },
+      // передаем обработчик клика карточки (открытие фото)
+      handleCardClick: (photoCaption, photoLink, photoDescription) => {
+        popupWithImage.setEventListeners();
+        popupWithImage.open(photoCaption, photoLink, photoDescription);
+      },
+      // передаем обработчик клика лайка
+      handleLikeClick: card => {
+        console.log('card at input of handleLikeClick:', card);
+        if (!card.isLiked) {
+          console.log('card.isLiked:', card.isLiked);
+          api
+            .saveLike(card._id)
+            .then(updatedCardData => {
+              card.handleServerResForLike(updatedCardData);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          console.log('card.isLiked:', card.isLiked);
+          api
+            .deleteLike(card._id)
+            .then(updatedCardData => {
+              card.handleServerResForLike(updatedCardData);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      },
+      handleDelButtonClick: 'qwe',
+    },
+    cardTemplateSelector
+  );
+  return card;
+}
+
+// ---------- Экземпляр класса Api для взаимодействия с сервером -----------
 export const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-30/',
   headers: {
@@ -51,23 +93,23 @@ export const api = new Api({
   },
 });
 
-// ========= Загружаем данные пользователя, создаем экз. пользователя, отображаем на странице =========
+// ============== ЗАГРУЗКА ДАННЫХ ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ, СОЗДАНИЕ ЭКЗЕМПЛЯРА, ОТРИСОВКА ============
 api
   .getUserInfo()
   .then(userData => {
-    const userInfo = new UserInfo(
+    const userInfo = new UserInfo({
       userNameSelector,
       userDescriptionSelector,
       userAvatarSelector,
-      userData
-    );
+      userData,
+    });
     console.log('userData:', userData);
-    // выбираем только необходимые данные и отображаем
+    // выбираем необходимые данные и отображаем странице
     const { name: userName, about: userDescription, avatar: avatarUrl } = userData;
     userInfo.setAvatar(avatarUrl);
     userInfo.setUserInfo({ userName, userDescription });
 
-    // --------------- Создаем экземпляр класса попапа профиля пользователя ---------------------
+    // ----------- Экземпляр попапа профиля -----------------
     const popupWithProfileForm = new PopupWithForm({
       popupSelector: profilePopupSelector,
       // передаем обработчик события отправки формы
@@ -84,7 +126,7 @@ api
           });
       },
     });
-    // -------------------- Ставим слушатель на открытие попапа профиля -------------------------
+    // ------------- Открытие попапа профиля ----------------
     profileOpenBtn.addEventListener('click', () => {
       profileFormValidator.resetValidation();
       popupWithProfileForm.setInputValues(userInfo.getUserInfo()); // передаем поля профиля в инпуты формы
@@ -92,84 +134,40 @@ api
     });
     return userInfo;
   })
+
+  // ========================= ПЕРВИЧНАЯ ЗАГРУЗКА и ОТРИСОВКА КАРТОЧЕК ===========================
   .then(userInfo => {
-    // console.log('userInfo:', userInfo)
-    // const userId = userInfo._userData._id;
-    // console.log('userId:', userId);
-    // ======== Загружаем начальный массив карточек, создаём экз. карточек и отрисовываем их =========
     api
       .getInitialCards()
       .then(initialCards => {
         // обрезаем массив, оставляя первые 6 карточек
         initialCards = initialCards.slice(0, 6);
 
-        // ---------------- Создаем экземпляр класса отрисовщика для галереи карточек ----------------
+        // -------------- Экземпляр отрисовщика -----------------------
         const cardSection = new Section(
           {
-            initialCards,
-            // передаем метод отрисовки отдельной карточки
-            renderer: cardData => {
-              const card = new Card(
-                {
-                  data: { cardData, userId: userInfo._userId },
-                  // передаем обработчик клика карточки (открытие фото)
-                  handleCardClick: (photoCaption, photoLink, photoDescription) => {
-                    popupWithImage.setEventListeners();
-                    popupWithImage.open(photoCaption, photoLink, photoDescription);
-                  },
-                  // передаем обработчик клика лайка
-                  handleLikeClick: card => {
-                    console.log('card:', card)
-
-                    if (!card.isLiked()) {
-                      api
-                        .saveLike(card._id)
-                        .then(newLikesData => {
-                          console.log('newLikesData:', newLikesData)
-                          card.handleServerResForLike(newLikesData);
-                        })
-                        .catch(err => {
-                          console.log(err);
-                        });
-                    } else {
-                      api
-                        .deleteLike(card._id)
-                        .then(newLikesData => {
-                          card.handleServerResForLike(newLikesData);
-                        })
-                        .catch(err => {
-                          console.log(err);
-                        });
-                    }
-                  },
-                  handleDelButtonClick: 'qwe',
-                },
-                cardTemplateSelector
-                // userInfo._userId
-              );
+            initialCards,            
+            renderer: cardData => { // метод отрисовки отдельной карточки
+              const card = createCardExemp(cardData, userInfo._id);
+              console.log('card:', card);
               const cardElement = card.generateCard();
               return cardElement;
             },
           },
           cardsContainerSelector
         );
-        // ------------------------------- Заполняем галерею карточками -----------------------------
-        cardSection.renderItems();
+        cardSection.renderItems(); // рендерим карточки
 
-        // ------------------------ Создаем экземпляр класса попапа карточки -------------------------
+        // ------------- Экземпляр попапа карточки ---------------------
         const popupWithCardForm = new PopupWithForm({
           popupSelector: cardPopupSelector,
-          // передаем обработчик события отправки формы
+          // обработчик события отправки формы
           formSubmitHandler: inputValues => {
             api
               .postCard(inputValues)
-              .then(cardData => {
-                console.log('данные карточки от сервера:', cardData);
-                // выбираем только необходимые данные и отображаем
-                cardSection.items = [
-                  { name: cardData.name, link: cardData.link, likes: [], owner: (_id = '') },
-                ];
-                cardSection.renderItems();
+              .then(сardData => {
+                cardSection.items = [сardData];
+                cardSection.renderItems(); // рендерим карточки
                 popupWithCardForm.close();
               })
               .catch(err => {
@@ -177,7 +175,7 @@ api
               });
           },
         });
-        // ------------ Ставим слушатель на открытие попапа добавления новой карточки --------------
+        // --------- Открытие попапа добавления новой карточки ------------
         cardPopupOpenBtn.addEventListener('click', () => {
           cardFormValidator.resetValidation();
           popupWithCardForm.open();
@@ -188,7 +186,7 @@ api
       });
   });
 
-// Создаем экземпляр класса для попапа просмотра фотографии
+// --------- Экземпляр попапа просмотра фотографии -------------
 const popupWithImage = new PopupWithImage(pfotoPopupSelector);
 
 // Для каждой формы ввода создаем свой экземпляр класса валидаторов и запускаем валидацию

@@ -12,7 +12,6 @@ export default class Card {
     },
     cardSelector
   ) {
-    // this._cardData = JSON.parse(JSON.stringify(cardData));
     this._likes = likes;
     this._link = link;
     this._name = name;
@@ -25,18 +24,21 @@ export default class Card {
     this._handleDelClick = handleDelClick;
     this._cardSelector = cardSelector;
   }
+
   // Определение "лайкнутости" карточки пользователем
   isLiked() {
     this._likes.some(item => {
       return item._id === this._userId;
     });
   }
-  // Установка состояния элементу лайка
-  _setLikeElementState() {
+  // Установка состояния элементу лайка в зависимости от "лайкнутости"
+  _setLikeState() {
     if (this.isLiked()) {
       this._cardLikeElement.classList.add('card__like_active');
+      this.isLiked = true;
     } else {
       this._cardLikeElement.classList.remove('card__like_active');
+      this.isLiked = false;
     }
   }
   // Определение принадлежности карточки пользователю
@@ -44,7 +46,7 @@ export default class Card {
     return this._owner._id === this._userId ? true : false;
   }
   // Установка состояния элементу кнопки удаления карточки
-  _setDelButtonElementState() {
+  _setDelButtonState() {
     if (this._isOwn()) {
       this._cardDelButtonElement.classList.remove('card__delete_inactive');
     } else {
@@ -72,8 +74,8 @@ export default class Card {
     this._cardLikeElement = this._cardElement.querySelector('.card__like');
     this._cardLikeNumberElement = this._cardElement.querySelector('.card__like-number');
     this._setLikeNumber();
-    this._setLikeElementState();
-    this._setDelButtonElementState();
+    this._setLikeState();
+    this._setDelButtonState();
     this._setEventListeners();
     this._cardNameElement.textContent = this._name;
     this._cardPhotoElement.setAttribute('src', this._link);
@@ -83,34 +85,35 @@ export default class Card {
   }
   // Установка слушателей на элементы карточки
   _setEventListeners() {
-    console.log('this на входе слушателя:', this);
+    this._cardPhotoElement.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link, this._description);
+    });
     this._cardLikeElement.addEventListener('click', () => {
       this._handleLikeClick(this);
     });
     this._cardDelButtonElement.addEventListener('click', () => {
-      this._deleteCard();
-    });
-    this._cardPhotoElement.addEventListener('click', () => {
-      this._handleCardClick(this._name, this._link, this._description);
-      console.log(this);
+      this.this._handleDelClick(this);
     });
   }
   // Обработка ответа сервера с обновленными данными по лайкам
-  handleServerResForLike(newLikesData) {
-    this._updateLikesData(newLikesData);
+  handleServerResForLike(updatedCardData) {
+    this._updateLikesData(updatedCardData);
     this._setLikeNumber();
-    this._toggleLikeElement();
+    this._invertIsLiked();
+    this._toggleLikeElementState();
   }
   // Сохранение нового объекта данных карточки, полученного от сервера
-  _updateLikesData(newLikesData) {
-    this._likes = newLikesData;
+  _updateLikesData(updatedCardData) {
+    this._likes = updatedCardData.likes;
   }
-  // Обновление количества лайков
-  _updateLikeNumber(newLikesData) {
-    this._cardLikeNumberElement.textContent = newLikesData.likes.length;
+    
+  // Инверсия свойства "лайкнутости"
+  _invertIsLiked() {
+    this.isLiked = !this.isLiked;
+    console.log('this.isLiked after handling:', this.isLiked);
   }
   // Переключение состояния элемента лайка
-  _toggleLikeElement() {
+  _toggleLikeElementState() {
     this._cardLikeElement.classList.toggle('card__like_active');
   }
   // Удаление карточки
