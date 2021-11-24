@@ -31,6 +31,9 @@ export const profilePopupSelector = '.popup_type_profile';
 // Селектор попапа просмотра фото
 export const pfotoPopupSelector = '.popup_type_image';
 
+// Селектор попапа подтверждения удаления
+export const confirmPopupSelector = '.popup_type_confirm';
+
 // Селекторы элементов профиля пользователя
 export const userNameSelector = '.profile__name';
 export const userDescriptionSelector = '.profile__job';

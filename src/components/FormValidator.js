@@ -1,7 +1,7 @@
 import { validationConfig } from '../utils/constants.js';
 
 // Класс "Валидатор формы"
-class FormValidator {
+export default class FormValidator {
   constructor(validationConfig, formElement) {
     this._formSelector = validationConfig.formSelector;
     this._inputSelector = validationConfig.inputSelector;
@@ -75,5 +75,3 @@ class FormValidator {
     this._setEventListeners();
   }
 }
-
-export { FormValidator, validationConfig };

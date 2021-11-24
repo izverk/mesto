@@ -11,6 +11,7 @@ import {
   cardPopupSelector,
   profilePopupSelector,
   pfotoPopupSelector,
+  confirmPopupSelector,
   userNameSelector,
   userDescriptionSelector,
   userAvatarSelector,
@@ -20,12 +21,13 @@ import Api from '../components/Api.js';
 // Класс карточек
 import Card from '../components/Card.js';
 // Класс валидаторов форм ввода данных и объект его настроек
-import { FormValidator } from '../components/FormValidator.js';
+import FormValidator from '../components/FormValidator.js';
 // Класс отрисовщиков элементов на странице
 import Section from '../components/Section.js';
-// Класс попапов
+// Классs попапов
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 // Класс данных о пользователе
 import UserInfo from '../components/UserInfo.js';
 
@@ -142,12 +144,24 @@ api
                     });
                 }
               },
-              // обработчик клика кнопки удаления карточки
+              // обработчик клика удаления карточки
               handleDelClick: card => {
-                console.log('card at input of handleDelClick:', card);
-                api.deleteCard(card._id).then(() => {
-                  card.deleteCardElement();
+                // console.log('card at input of handleDelClick:', card);
+                popupWithCardDelConfirm.defineConfirmedAction({
+                  confirmedAction: cardId => {
+                    api
+                      .deleteCard(cardId)
+                      .then(() => {
+                        card.deleteCardElement();
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      });
+                  },
+                  confirmedObject: card._id,
                 });
+                popupWithCardDelConfirm.setEventListeners(card);
+                popupWithCardDelConfirm.open();
               },
             },
             cardTemplateSelector
@@ -170,7 +184,7 @@ api
         );
         cardSection.renderItems(); // рендерим карточки
 
-        // ------------- Экземпляр попапа карточки ---------------------
+        // ---------- Экземпляр попапа добавления карточки -----------
         const popupWithCardForm = new PopupWithForm({
           popupSelector: cardPopupSelector,
           // обработчик события отправки формы
@@ -187,7 +201,7 @@ api
               });
           },
         });
-        // --------- Открытие попапа добавления новой карточки ------------
+        // --------- Открытие попапа добавления карточки ------------
         cardPopupOpenBtn.addEventListener('click', () => {
           cardFormValidator.resetValidation();
           popupWithCardForm.open();
@@ -200,6 +214,9 @@ api
 
 // --------- Экземпляр попапа просмотра фотографии -------------
 const popupWithImage = new PopupWithImage(pfotoPopupSelector);
+
+// --------- Экземпляр попапа потверждения удаления -------------
+const popupWithCardDelConfirm = new PopupWithConfirm(confirmPopupSelector);
 
 // Для каждой формы ввода создаем свой экземпляр класса валидаторов и запускаем валидацию
 const profileFormValidator = new FormValidator(validationConfig, profileFormElement);
