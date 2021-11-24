@@ -5,6 +5,7 @@ import './index.css';
 // Константы
 import {
   validationConfig,
+  apiconfig,
   cardsContainerSelector,
   cardTemplateSelector,
   cardPopupSelector,
@@ -43,13 +44,7 @@ const cardFormElement = document.querySelector('.popup_type_card').querySelector
 // ================================== ОСНОВНОЙ АЛГОРИТМ ========================================
 
 // ---------- Экземпляр класса Api для взаимодействия с сервером -----------
-export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-30/',
-  headers: {
-    authorization: 'da681d0f-779e-4fd5-82ae-9312d4a0fb2c',
-    'Content-Type': 'application/json',
-  },
-});
+export const api = new Api(apiconfig);
 
 // ============== ЗАГРУЗКА ДАННЫХ ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ, СОЗДАНИЕ ЭКЗЕМПЛЯРА, ОТРИСОВКА ============
 api
@@ -102,7 +97,7 @@ api
         initialCards.sort((a, b) => {
           let x, y;
           if (a.owner._id === userInfo._id) {
-             x = 0;
+            x = 0;
           } else x = 1;
           if (b.owner._id === userInfo._id) {
             y = 0;
@@ -150,14 +145,9 @@ api
               // обработчик клика кнопки удаления карточки
               handleDelClick: card => {
                 console.log('card at input of handleDelClick:', card);
-                // api
-                //   .deleteCard(card._id)
-                //   .then(updatedCardData => {
-                //     delete (card);
-                //   })
-                //   .catch(err => {
-                //     console.log(err);
-                //   });
+                api.deleteCard(card._id).then(() => {
+                  card.deleteCardElement();
+                });
               },
             },
             cardTemplateSelector

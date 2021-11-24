@@ -8,7 +8,7 @@ export default class Card {
       },
       handleCardClick,
       handleLikeClick,
-      handleDelClick: handleDelClick,
+      handleDelClick,
     },
     cardSelector
   ) {
@@ -25,47 +25,7 @@ export default class Card {
     this._cardSelector = cardSelector;
   }
 
-  // Определение "лайкнутости" карточки пользователем
-  _defineIsLiked() {
-    return this._likes.some(item => {
-      return item._id === this._userId;
-    });
-  }
-  // Установка состояния элементу лайка в зависимости от "лайкнутости"
-  _setLikeState() {
-    if (this._defineIsLiked()) {
-      this._cardLikeElement.classList.add('card__like_active');
-      this.isLiked = true;
-    } else {
-      this._cardLikeElement.classList.remove('card__like_active');
-      this.isLiked = false;
-    }
-  }
-  // Определение принадлежности карточки пользователю
-  _isOwn() {
-    return this._owner._id === this._userId ? true : false;
-  }
-  // Установка состояния элементу кнопки удаления карточки
-  _setDelButtonState() {
-    if (this._isOwn()) {
-      this._cardDelButtonElement.classList.remove('card__delete_inactive');
-    } else {
-      this._cardDelButtonElement.classList.add('card__delete_inactive');
-    }
-  }
-  // Установка количества лайков в разметку
-  _setLikeNumber() {
-    this._cardLikeNumberElement.textContent = this._likes.length;
-  }
-  // Получение шаблона разметки для новой карточки
-  _getTemplate() {
-    const cardElement = document
-      .querySelector(this._cardSelector)
-      .content.querySelector('.card')
-      .cloneNode(true);
-    return cardElement;
-  }
-  // Наполнение данными шаблона разметки карточки
+  // Подготовка элемента карточки для вставки на страницу
   generateCard() {
     this._cardElement = this._getTemplate();
     this._cardNameElement = this._cardElement.querySelector('.card__name');
@@ -83,6 +43,46 @@ export default class Card {
     this._cardLikeNumberElement.textContent = this._likes.length;
     return this._cardElement;
   }
+  // Получение шаблона разметки для новой карточки
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this._cardSelector)
+      .content.querySelector('.card')
+      .cloneNode(true);
+    return cardElement;
+  }
+  // Установка количества лайков в разметку
+  _setLikeNumber() {
+    this._cardLikeNumberElement.textContent = this._likes.length;
+  }
+  // Установка состояния элементу лайка в зависимости от "лайкнутости"
+  _setLikeState() {
+    if (this._defineIsLiked()) {
+      this._cardLikeElement.classList.add('card__like_active');
+      this.isLiked = true;
+    } else {
+      this._cardLikeElement.classList.remove('card__like_active');
+      this.isLiked = false;
+    }
+  }
+  // Определение "лайкнутости" карточки текущим пользователем
+  _defineIsLiked() {
+    return this._likes.some(item => {
+      return item._id === this._userId;
+    });
+  }
+  // Установка состояния элементу кнопки удаления карточки
+  _setDelButtonState() {
+    if (this._isOwn()) {
+      this._cardDelButtonElement.classList.remove('card__delete_inactive');
+    } else {
+      this._cardDelButtonElement.classList.add('card__delete_inactive');
+    }
+  }
+  // Определение принадлежности карточки пользователю
+  _isOwn() {
+    return this._owner._id === this._userId ? true : false;
+  }
   // Установка слушателей на элементы карточки
   _setEventListeners() {
     this._cardPhotoElement.addEventListener('click', () => {
@@ -92,7 +92,7 @@ export default class Card {
       this._handleLikeClick(this);
     });
     this._cardDelButtonElement.addEventListener('click', () => {
-      this.this._handleDelClick(this);
+      this._handleDelClick(this);
     });
   }
   // Обработка ответа сервера с обновленными данными по лайкам
@@ -106,7 +106,6 @@ export default class Card {
   _updateLikesData(updatedCardData) {
     this._likes = updatedCardData.likes;
   }
-
   // Инверсия свойства "лайкнутости"
   _invertIsLiked() {
     this.isLiked = !this.isLiked;
@@ -117,7 +116,7 @@ export default class Card {
     this._cardLikeElement.classList.toggle('card__like_active');
   }
   // Удаление карточки
-  _deleteCard() {
+  deleteCardElement() {
     this._cardElement.remove();
   }
 }
