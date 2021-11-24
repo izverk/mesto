@@ -26,14 +26,14 @@ export default class Card {
   }
 
   // Определение "лайкнутости" карточки пользователем
-  isLiked() {
-    this._likes.some(item => {
+  _defineIsLiked() {
+    return this._likes.some(item => {
       return item._id === this._userId;
     });
   }
   // Установка состояния элементу лайка в зависимости от "лайкнутости"
   _setLikeState() {
-    if (this.isLiked()) {
+    if (this._defineIsLiked()) {
       this._cardLikeElement.classList.add('card__like_active');
       this.isLiked = true;
     } else {
@@ -106,7 +106,7 @@ export default class Card {
   _updateLikesData(updatedCardData) {
     this._likes = updatedCardData.likes;
   }
-    
+
   // Инверсия свойства "лайкнутости"
   _invertIsLiked() {
     this.isLiked = !this.isLiked;

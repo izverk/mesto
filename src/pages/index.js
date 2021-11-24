@@ -42,48 +42,6 @@ const cardFormElement = document.querySelector('.popup_type_card').querySelector
 
 // ================================== ОСНОВНОЙ АЛГОРИТМ ========================================
 
-// -------------Функция создания экземпляра карточки------------------
-function createCardExemp(cardData, userId) {
-  const card = new Card(
-    {
-      data: { cardData, userId },
-      // передаем обработчик клика карточки (открытие фото)
-      handleCardClick: (photoCaption, photoLink, photoDescription) => {
-        popupWithImage.setEventListeners();
-        popupWithImage.open(photoCaption, photoLink, photoDescription);
-      },
-      // передаем обработчик клика лайка
-      handleLikeClick: card => {
-        console.log('card at input of handleLikeClick:', card);
-        if (!card.isLiked) {
-          console.log('card.isLiked:', card.isLiked);
-          api
-            .saveLike(card._id)
-            .then(updatedCardData => {
-              card.handleServerResForLike(updatedCardData);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          console.log('card.isLiked:', card.isLiked);
-          api
-            .deleteLike(card._id)
-            .then(updatedCardData => {
-              card.handleServerResForLike(updatedCardData);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }
-      },
-      handleDelButtonClick: 'qwe',
-    },
-    cardTemplateSelector
-  );
-  return card;
-}
-
 // ---------- Экземпляр класса Api для взаимодействия с сервером -----------
 export const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-30/',
@@ -115,7 +73,7 @@ api
       // передаем обработчик события отправки формы
       formSubmitHandler: inputValues => {
         api
-          .saveUser(inputValues)
+          .editUser(inputValues)
           .then(newUserData => {
             userInfo.updateUserData(newUserData);
             userInfo.setUserInfo(inputValues);
@@ -140,14 +98,78 @@ api
     api
       .getInitialCards()
       .then(initialCards => {
+        // сортируем полученный массив, ставя вперед карточки текущего пользователя
+        initialCards.sort((a, b) => {
+          let x, y;
+          if (a.owner._id === userInfo._id) {
+             x = 0;
+          } else x = 1;
+          if (b.owner._id === userInfo._id) {
+            y = 0;
+          } else y = 1;
+          return x - y;
+        });
         // обрезаем массив, оставляя первые 6 карточек
         initialCards = initialCards.slice(0, 6);
 
+        // -------------Функция создания экземпляра карточки------------------
+        function createCardExemp(cardData, userId) {
+          const card = new Card(
+            {
+              data: { cardData, userId },
+              // обработчик клика карточки (открытие фото)
+              handleCardClick: (photoCaption, photoLink, photoDescription) => {
+                popupWithImage.setEventListeners();
+                popupWithImage.open(photoCaption, photoLink, photoDescription);
+              },
+              // обработчик клика лайка
+              handleLikeClick: card => {
+                console.log('card at input of handleLikeClick:', card);
+                if (!card.isLiked) {
+                  console.log('card.isLiked:', card.isLiked);
+                  api
+                    .setLike(card._id)
+                    .then(updatedCardData => {
+                      card.handleServerResForLike(updatedCardData);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                } else {
+                  console.log('card.isLiked:', card.isLiked);
+                  api
+                    .deleteLike(card._id)
+                    .then(updatedCardData => {
+                      card.handleServerResForLike(updatedCardData);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                }
+              },
+              // обработчик клика кнопки удаления карточки
+              handleDelClick: card => {
+                console.log('card at input of handleDelClick:', card);
+                // api
+                //   .deleteCard(card._id)
+                //   .then(updatedCardData => {
+                //     delete (card);
+                //   })
+                //   .catch(err => {
+                //     console.log(err);
+                //   });
+              },
+            },
+            cardTemplateSelector
+          );
+          return card;
+        }
         // -------------- Экземпляр отрисовщика -----------------------
         const cardSection = new Section(
           {
-            initialCards,            
-            renderer: cardData => { // метод отрисовки отдельной карточки
+            initialCards,
+            renderer: cardData => {
+              // метод отрисовки отдельной карточки
               const card = createCardExemp(cardData, userInfo._id);
               console.log('card:', card);
               const cardElement = card.generateCard();

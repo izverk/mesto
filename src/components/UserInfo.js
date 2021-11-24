@@ -31,7 +31,7 @@ export default class UserInfo {
     this._userAvatarElement.src = avatarUrl;
   }
   updateUserData(newUserData) {
-    this._userData.name = newUserData.name;
-    this._userData.about = newUserData.about;
+    this.name = newUserData.name;
+    this.about = newUserData.about;
   }
 }
