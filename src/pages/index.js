@@ -48,7 +48,8 @@ const cardFormElement = document.querySelector('.popup_type_card').querySelector
 // ---------- Экземпляр класса Api для взаимодействия с сервером -----------
 export const api = new Api(apiconfig);
 
-// ============== ЗАГРУЗКА ДАННЫХ ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ, СОЗДАНИЕ ЭКЗЕМПЛЯРА, ОТРИСОВКА ============
+// ============== ЗАГРУЗКА ДАННЫХ ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ, СОЗДАНИЕ ЭКЗЕМПЛЯРА, ==================
+// ======================== ОТОБРАЖЕНИЕ НА СТРАНИЦЕ + ПОПАП ПРОФИЛЯ ============================
 api
   .getUserInfo()
   .then(userData => {
@@ -69,12 +70,14 @@ api
       popupSelector: profilePopupSelector,
       // передаем обработчик события отправки формы
       formSubmitHandler: inputValues => {
+        popupWithProfileForm.changeBtnText('Сохранение...');
         api
           .editUser(inputValues)
           .then(newUserData => {
             userInfo.updateUserData(newUserData);
             userInfo.setUserInfo(inputValues);
             popupWithProfileForm.close();
+            popupWithProfileForm.changeBtnText('Сохранить');
           })
           .catch(err => {
             console.log(err);
@@ -90,7 +93,8 @@ api
     return userInfo;
   })
 
-  // ========================= ПЕРВИЧНАЯ ЗАГРУЗКА и ОТРИСОВКА КАРТОЧЕК ===========================
+  // ========================= ПЕРВИЧНАЯ ЗАГРУЗКА ДАННЫХ КАРТОЧЕК, ===============================
+  // ======================== ОТРИСОВКА + ПОПАП ДОБАВЛЕНИЯ КАРТОЧКИ ==============================
   .then(userInfo => {
     api
       .getInitialCards()
@@ -146,24 +150,26 @@ api
               },
               // обработчик клика удаления карточки
               handleDelClick: card => {
-                // console.log('card at input of handleDelClick:', card);
+                // забираем в класс попапа подтверждения обработчик подтверждения
+                // и аргумент для него (card._id)
                 popupWithCardDelConfirm.getConfirmHandler({
+                  // обработчик подтверждения удаления
                   confirmHandler: cardId => {
+                    popupWithCardDelConfirm.changeBtnText('Удаление...');
                     api
                       .deleteCard(cardId)
                       .then(() => {
                         popupWithCardDelConfirm.close();
                         card.deleteCardElement();
-                        popupWithCardDelConfirm.restoreBtnTExt();
+                        popupWithCardDelConfirm.changeBtnText('Да');
                       })
                       .catch(err => {
                         console.log(err);
                       });
-                    popupWithCardDelConfirm.changeBtnText();
                   },
                   confirmHandlerArgument: card._id,
                 });
-                popupWithCardDelConfirm.setEventListeners(card);
+                popupWithCardDelConfirm.setEventListeners();
                 popupWithCardDelConfirm.open();
               },
             },
@@ -185,19 +191,22 @@ api
           },
           cardsContainerSelector
         );
-        cardSection.renderItems(); // рендерим карточки
+        // рендерим карточки
+        cardSection.renderItems();
 
         // ---------- Экземпляр попапа добавления карточки -----------
         const popupWithCardForm = new PopupWithForm({
           popupSelector: cardPopupSelector,
           // обработчик события отправки формы
           formSubmitHandler: inputValues => {
+            popupWithCardForm.changeBtnText('Сохранение...');
             api
               .postCard(inputValues)
               .then(сardData => {
                 cardSection.items = [сardData];
                 cardSection.renderItems(); // рендерим карточки
                 popupWithCardForm.close();
+                popupWithCardForm.changeBtnText('Сохранить');
               })
               .catch(err => {
                 console.log(err);
@@ -215,14 +224,18 @@ api
       });
   });
 
-// --------- Экземпляр попапа просмотра фотографии -------------
+// =============================== ПРОЧИЕ ПОПАПЫ + ВАЛИДАЦИЯ ===================================
+
+// --------- Экземпляр попапа просмотра фотографии --------------
 const popupWithImage = new PopupWithImage(pfotoPopupSelector);
 
 // --------- Экземпляр попапа потверждения удаления -------------
 const popupWithCardDelConfirm = new PopupWithConfirm(confirmPopupSelector);
+console.log('ЭКЗЕМПЛЯР popupWithCardDelConfirm:', popupWithCardDelConfirm);
 
-// Для каждой формы ввода создаем свой экземпляр класса валидаторов и запускаем валидацию
+// -------------- Экземпляры класса валидаторов -----------------
 const profileFormValidator = new FormValidator(validationConfig, profileFormElement);
-profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(validationConfig, cardFormElement);
+// запускаем валидацию
+profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
