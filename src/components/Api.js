@@ -70,9 +70,10 @@ export default class Api {
       headers: this._headers,
     }).then(res => {
       if (res.ok) {
+        console.log(`${res.status}, ${res.statusText}`);
         return res.json();
       } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return Promise.reject(`Ошибка: ${res.status}, ${res.statusText}`);
       }
     });
   }

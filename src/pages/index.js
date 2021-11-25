@@ -147,18 +147,21 @@ api
               // обработчик клика удаления карточки
               handleDelClick: card => {
                 // console.log('card at input of handleDelClick:', card);
-                popupWithCardDelConfirm.defineConfirmedAction({
-                  confirmedAction: cardId => {
+                popupWithCardDelConfirm.getConfirmHandler({
+                  confirmHandler: cardId => {
                     api
                       .deleteCard(cardId)
                       .then(() => {
+                        popupWithCardDelConfirm.close();
                         card.deleteCardElement();
+                        popupWithCardDelConfirm.restoreBtnTExt();
                       })
                       .catch(err => {
                         console.log(err);
                       });
+                    popupWithCardDelConfirm.changeBtnText();
                   },
-                  confirmedObject: card._id,
+                  confirmHandlerArgument: card._id,
                 });
                 popupWithCardDelConfirm.setEventListeners(card);
                 popupWithCardDelConfirm.open();

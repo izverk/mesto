@@ -1,5 +1,6 @@
 import Popup from './Popup.js';
 
+// Класс попапа подтверждения действия
 export default class PopupWithConfirm extends Popup {
   constructor(confirmPopupSelector) {
     super(confirmPopupSelector);
@@ -8,12 +9,19 @@ export default class PopupWithConfirm extends Popup {
   setEventListeners() {
     super.setEventListeners();
     this._confirmBtnElement.addEventListener('click', () => {
-      this._confirmHandler(this._confirmedObject);
+      this._confirmHandler(this._confirmHandlerArgument);
     });
   }
-  // Определение обработчика подтверждения и его аргумента
-  defineConfirmedAction({ confirmedAction, confirmedObject }) {
-    this._confirmHandler = confirmedAction;
-    this._confirmedObject = confirmedObject;
+  // Получение обработчика клика и его аргумента
+  getConfirmHandler({ confirmHandler, confirmHandlerArgument }) {
+    this._confirmHandler = confirmHandler;
+    this._confirmHandlerArgument = confirmHandlerArgument;
+  }
+  // Замена надписи на кнопке при выполнении удаления
+  changeBtnText() {
+    this._confirmBtnElement.textContent = 'Удаление...';
+  }
+  restoreBtnTExt() {
+    this._confirmBtnElement.textContent = 'Да';
   }
 }
