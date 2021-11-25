@@ -13,15 +13,18 @@
     </header>
     <main>
       <section class="profile page__section">
-        <img
-          class="profile__avatar"
-          src="<%=require('./images/cousteau.jpg')%>"
-          alt="Фотография-аватар пользователя"
-        />
+        <div class="profile__avatar-container">
+          <img
+            class="profile__avatar"
+            src="<%=require('./images/cousteau.jpg')%>"
+            alt="Фотография-аватар пользователя"
+          />
+          <div class="profile__avatar-overlay"></div>
+        </div>
         <div class="profile__info">
           <div class="profile__name-container">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button type="button" class="profile__edit-button buttons"></button>
+            <button class="profile__edit-button buttons"></button>
           </div>
           <p class="profile__job">Исследователь океана</p>
         </div>
@@ -98,6 +101,26 @@
         </form>
       </div>
     </div>
+    <div class="popup popup_type_avatar">
+      <div class="popup__container">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <button type="button" class="popup__close-button buttons"></button>
+        <form class="popup__form popup__form_type_card" name="avatar" novalidate>
+          <input
+            type="url"
+            name="link"
+            id="avatarlink-input"
+            class="popup__input popup__input_type_avatarlink"
+            placeholder="Ссылка на фото"
+            required
+          />
+          <span class="popup__input-error avatarlink-input-error"></span>
+          <button type="submit" class="popup__save-button popup__save-button_inactive" disabled>
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
     <div class="popup popup_type_image">
       <figure class="popup__container popup__container_type_image">
         <button type="button" class="popup__close-button buttons"></button>
@@ -111,10 +134,12 @@
     </div>
     <div class="popup popup_type_confirm">
       <div class="popup__container">
-        <h2 class="popup__title">Вы уверены?</h2>
+        <h2 class="popup__title popup__title_type_confirm">Вы уверены?</h2>
         <button type="button" class="popup__close-button buttons"></button>
         <div class="popup__form popup__form_type_confirm">
-          <button type="button" class="popup__save-button">Да</button>
+          <button type="button" class="popup__save-button popup__save-button_type_confirm">
+            Да
+          </button>
         </div>
       </div>
     </div>
@@ -126,7 +151,7 @@
         </div>
         <div class="card__like-container">
           <button type="button" class="card__like"></button>
-          <span class="card__like-number">8</span>
+          <span class="card__like-number"></span>
         </div>
         <button type="button" class="card__delete"></button>
       </li>
