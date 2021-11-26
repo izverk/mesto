@@ -109,7 +109,6 @@ export default class Card {
   // Инверсия свойства "лайкнутости"
   _invertIsLiked() {
     this.isLiked = !this.isLiked;
-    console.log('this.isLiked after handling:', this.isLiked);
   }
   // Переключение состояния элемента лайка
   _toggleLikeElementState() {

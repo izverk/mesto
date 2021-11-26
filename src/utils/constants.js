@@ -31,7 +31,6 @@ export const confirmPopupSelector = '.popup_type_confirm';
 export const userNameSelector = '.profile__name';
 export const userDescriptionSelector = '.profile__job';
 export const userAvatarImageSelector = '.profile__avatar';
-export const userAvatarBtnSelector = '.profile__avatar-overlay';
 
 // Объект настроек с селекторами и классами элементов, используемых при валидации
 export const validationConfig = {

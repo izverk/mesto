@@ -15,7 +15,6 @@ import {
   userNameSelector,
   userDescriptionSelector,
   userAvatarImageSelector,
-  userAvatarBtnSelector,
   validationConfig,
 } from '../utils/constants.js';
 // Класс взаимодействия с сервором
@@ -42,7 +41,7 @@ const profileFormElement = document
   .querySelector('.popup__form');
 
 // Попап аватара пользователя (кнопка открытия и форма ввода)
-const avatarEditBtn = document.querySelector(userAvatarBtnSelector);
+const avatarEditBtn = document.querySelector('.profile__avatar-overlay');
 const avatarFormElement = document
   .querySelector('.popup_type_avatar')
   .querySelector('.popup__form');
@@ -154,9 +153,7 @@ api
               },
               // обработчик клика лайка
               handleLikeClick: card => {
-                console.log('card at input of handleLikeClick:', card);
                 if (!card.isLiked) {
-                  console.log('card.isLiked:', card.isLiked);
                   api
                     .setLike(card._id)
                     .then(updatedCardData => {
@@ -166,7 +163,6 @@ api
                       console.log(err);
                     });
                 } else {
-                  console.log('card.isLiked:', card.isLiked);
                   api
                     .deleteLike(card._id)
                     .then(updatedCardData => {
@@ -213,7 +209,6 @@ api
             renderer: cardData => {
               // метод отрисовки отдельной карточки
               const card = createCardExemp(cardData, userInfo._id);
-              console.log('card:', card);
               const cardElement = card.generateCard();
               return cardElement;
             },
@@ -251,6 +246,9 @@ api
       .catch(err => {
         console.log(err);
       });
+  })
+  .catch(err => {
+    console.log(err);
   });
 
 // =============================== ПРОЧИЕ ПОПАПЫ + ВАЛИДАЦИЯ ===================================
@@ -265,7 +263,6 @@ const popupWithCardDelConfirm = new PopupWithConfirmation(confirmPopupSelector);
 const profileFormValidator = new FormValidator(validationConfig, profileFormElement);
 const cardFormValidator = new FormValidator(validationConfig, cardFormElement);
 const avatarFormValidator = new FormValidator(validationConfig, avatarFormElement);
-
 // запускаем валидацию
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
