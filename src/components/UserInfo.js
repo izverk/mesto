@@ -2,36 +2,41 @@ export default class UserInfo {
   constructor({
     userNameSelector,
     userDescriptionSelector,
-    userAvatarSelector,
+    userAvatarImageSelector,
     userData: { about, avatar, cohort, name, _id },
   }) {
     this._userNameSelector = userNameSelector;
     this._userDescriptionSelector = userDescriptionSelector;
-    this._userAvatarSelector = userAvatarSelector;
+    this._userAvatarImageSelector = userAvatarImageSelector;
     this._userNameElement = document.querySelector(userNameSelector);
     this._userDescriptionElement = document.querySelector(userDescriptionSelector);
-    this._userAvatarElement = document.querySelector(userAvatarSelector);
+    this._userAvatarImageElement = document.querySelector(userAvatarImageSelector);
     this.about = about;
     this.avatar = avatar;
     this.cohort = cohort;
     this.name = name;
     this._id = _id;
   }
-  getUserInfo() {
+  // Получение значений из полей профиля
+  getProfileFields() {
     return {
       userName: this._userNameElement.textContent,
       userDescription: this._userDescriptionElement.textContent,
     };
   }
-  setUserInfo({ userName, userDescription }) {
-    this._userNameElement.textContent = userName;
-    this._userDescriptionElement.textContent = userDescription;
+  // Установка значений в поля профиля
+  setProfileFields() {
+    this._userNameElement.textContent = this.name;
+    this._userDescriptionElement.textContent = this.about;
   }
-  setAvatar(avatarUrl) {
-    this._userAvatarElement.src = avatarUrl;
+  // Установка аватара
+  setAvatar() {
+    this._userAvatarImageElement.src = this.avatar;
   }
+  // Обновить свойства экземпляра класса
   updateUserData(newUserData) {
     this.name = newUserData.name;
     this.about = newUserData.about;
+    this.avatar = newUserData.avatar;
   }
 }

@@ -1,7 +1,7 @@
 import Popup from './Popup.js';
 
 // Класс попапа подтверждения действия
-export default class PopupWithConfirm extends Popup {
+export default class PopupWithConfirmation extends Popup {
   constructor(confirmPopupSelector) {
     super(confirmPopupSelector);
   }
