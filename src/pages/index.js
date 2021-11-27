@@ -194,7 +194,6 @@ api
                   },
                   confirmHandlerArgument: card._id,
                 });
-                popupWithCardDelConfirm.setEventListeners();
                 popupWithCardDelConfirm.open();
               },
             },

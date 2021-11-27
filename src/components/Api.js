@@ -3,18 +3,20 @@ export default class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
+  // Проверка ответа сервера
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  }
   // Получение профиля пользователя
   getUserInfo() {
     return fetch(`${this._baseUrl}users/me`, {
       method: 'GET',
       headers: this._headers,
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
   // Редактирование профиля пользователя
   editUser({ userName, userDescription }) {
@@ -25,42 +27,24 @@ export default class Api {
         name: userName,
         about: userDescription,
       }),
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
   // Обновление аватара
-  updateAvatar({avatarUrl}) {
+  updateAvatar({ avatarUrl }) {
     return fetch(`${this._baseUrl}users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatarUrl,
       }),
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
   // Получение начального массива карточек
   getInitialCards() {
     return fetch(`${this._baseUrl}cards`, {
       method: 'GET',
       headers: this._headers,
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
   // Запостить карточку
   postCard({ name, link }) {
@@ -71,51 +55,27 @@ export default class Api {
         name: name,
         link: link,
       }),
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
   // Удаление карточки
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}, ${res.statusText}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
   // Постановка лайка карточки
   setLike(cardId) {
     return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers,
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
   // Удаление лайка карточки
   deleteLike(cardId) {
     return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    }).then(this._checkResponse);
   }
 }
