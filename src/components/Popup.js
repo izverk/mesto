@@ -34,6 +34,8 @@ export default class Popup {
   }
   // Замена надписи на кнопке
   changeBtnText(btnText) {
-    this._saveBtnElement.textContent = btnText;
+    if (this._saveBtnElement) {
+      this._saveBtnElement.textContent = btnText;
+    }
   }
 }

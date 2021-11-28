@@ -82,10 +82,12 @@ api
             userInfo.updateUserData(newUserData);
             userInfo.setProfileFields();
             popupWithProfileForm.close();
-            popupWithProfileForm.changeBtnText('Сохранить');
           })
           .catch(err => {
             console.log(err);
+          })
+          .finally(() => {
+            popupWithProfileForm.changeBtnText('Сохранить');
           });
       },
     });
@@ -107,16 +109,18 @@ api
             userInfo.updateUserData(newUserData);
             userInfo.setAvatar();
             popupWithAvatarForm.close();
-            popupWithAvatarForm.changeBtnText('Сохранить');
           })
           .catch(err => {
             console.log(err);
+          })
+          .finally(() => {
+            popupWithAvatarForm.changeBtnText('Сохранить');
           });
       },
     });
     // ------------- Открытие попапа аватара ----------------
     avatarEditBtn.addEventListener('click', () => {
-      profileFormValidator.resetValidation();
+      avatarFormValidator.resetValidation();
       popupWithAvatarForm.open();
     });
     return userInfo;
@@ -139,7 +143,7 @@ api
           return x - y;
         });
         // обрезаем массив, оставляя первые 6 карточек
-        initialCards = initialCards.slice(0, 6);
+        initialCards = initialCards.slice(0, 50);
 
         // -------------Функция создания экземпляра карточки------------------
         function createCardExemp(cardData, userId) {
@@ -148,7 +152,6 @@ api
               data: { cardData, userId },
               // обработчик клика карточки (открытие фото)
               handleCardClick: (photoCaption, photoLink, photoDescription) => {
-                popupWithImage.setEventListeners();
                 popupWithImage.open(photoCaption, photoLink, photoDescription);
               },
               // обработчик клика лайка
@@ -186,10 +189,12 @@ api
                       .then(() => {
                         popupWithCardDelConfirm.close();
                         card.deleteCardElement();
-                        popupWithCardDelConfirm.changeBtnText('Да');
                       })
                       .catch(err => {
                         console.log(err);
+                      })
+                      .finally(() => {
+                        popupWithCardDelConfirm.changeBtnText('Да');
                       });
                   },
                   confirmHandlerArgument: card._id,
@@ -229,10 +234,12 @@ api
                 cardSection.items = [сardData];
                 cardSection.renderItems(); // рендерим карточки
                 popupWithCardForm.close();
-                popupWithCardForm.changeBtnText('Сохранить');
               })
               .catch(err => {
                 console.log(err);
+              })
+              .finally(() => {
+                popupWithCardForm.changeBtnText('Сохранить');
               });
           },
         });
