@@ -25,18 +25,19 @@ export default class UserInfo {
     };
   }
   // Установка значений в поля профиля
-  setProfileFields() {
-    this._userNameElement.textContent = this.name;
-    this._userDescriptionElement.textContent = this.about;
+  setProfileFields(name, about) {
+    this._userNameElement.textContent = name;
+    this._userDescriptionElement.textContent = about;
   }
   // Установка аватара
-  setAvatar() {
-    this._userAvatarImageElement.src = this.avatar;
+  setAvatar(avatarUrl) {
+    this._userAvatarImageElement.src = avatarUrl;
   }
   // Обновить свойства экземпляра класса
   updateUserData(newUserData) {
     this.name = newUserData.name;
     this.about = newUserData.about;
     this.avatar = newUserData.avatar;
+    this._id = newUserData._id;
   }
 }

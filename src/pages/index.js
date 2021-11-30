@@ -67,8 +67,8 @@ api
       userData,
     });
     userInfo.updateUserData(userData);
-    userInfo.setProfileFields();
-    userInfo.setAvatar();
+    userInfo.setProfileFields(userData.name, userData.about);
+    userInfo.setAvatar(userData.avatar);
 
     // ----------- Экземпляр попапа профиля -----------------
     const popupWithProfileForm = new PopupWithForm({
@@ -80,7 +80,7 @@ api
           .editUser(inputValues)
           .then(newUserData => {
             userInfo.updateUserData(newUserData);
-            userInfo.setProfileFields();
+            userInfo.setProfileFields(newUserData.name, newUserData.about);
             popupWithProfileForm.close();
           })
           .catch(err => {
@@ -107,7 +107,7 @@ api
           .updateAvatar(inputValues)
           .then(newUserData => {
             userInfo.updateUserData(newUserData);
-            userInfo.setAvatar();
+            userInfo.setAvatar(newUserData.avatar);
             popupWithAvatarForm.close();
           })
           .catch(err => {
