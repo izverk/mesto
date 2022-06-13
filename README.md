@@ -1,8 +1,12 @@
 # "mesto"
 
-Проект "Место".
+Проект "Место".  
+Ссылка на развернутый проект на Github Pages -
+[https://izverk.github.io/mesto/](https://izverk.github.io/mesto/)  
+Ссылка на макет в Figma -
+[https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9)
 
-## Что за проект и о чем он
+## Что за проект и о чем
 
 Это интерактивный адаптивный сайт, реализованный с использованием нативного JS и
 ООП. Создан в рамках обучения на курсах
@@ -15,27 +19,27 @@
 ссылке, давать им названия, удалять, просматривать и ставить лайки.<br> Сервер и
 API для сохранения ссылок на фотографии и данных профиля пользователя
 предоставлены Яндекс-Практикумом.<br> Детальная информация о требованиях к
-проекту и его функциональности приведена в соответствующих разделах настоящего
-описания.
+проекту и его функциональности приведена ниже в соответствующих разделах
+настоящего описания.
 
-## Размещение проекта
+## Инструкция по использованию проекта
 
-Проект развернут на Github Pages:
-[https://izverk.github.io/mesto/](https://izverk.github.io/mesto/)
+1. Клонировать проект: git clone https://github.com/izverk/mesto.git
+2. Установить зависимости: npm i
+3. Запустить dev-server: npm run dev
+4. Собрать проект: npm run build
+5. Задеплоить в Github Pages: npm run deploy
 
 ## Сведения о примененных технологиях и инструментах
 
 - HTML
-- CSS
-  - Flexbox
-  - Grid Layout
+- CSS (Flexbox, Grid Layout)
 - JavaScript
   - Constraint validation API
   - ООП
   - асинхронность: промисы и HTTP-запросы
   - API сервера Яндекс-Практикума
 - БЭМ Nested
-- Git
 - Webpack
 
 ## Функциональность проекта
@@ -106,14 +110,3 @@ API для сохранения ссылок на фотографии и дан
 - все ссылки и интерактивные элементы имеют состояние наведения :hover;
 - контентные изображения имеют alt с корректным описанием, соответствующим языку
   страницы.
-
-Ссылка на макет в Figma:
-[https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9)
-
-## Инструкция по использованию проекта
-
-1. Клонировать проект: git clone https://github.com/izverk/mesto.git
-2. Установить зависимости: npm i
-3. Запустить dev-server: npm run dev
-4. Собрать проект: npm run build
-5. Задеплоить в Github Pages: npm run deploy
